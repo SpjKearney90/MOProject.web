@@ -1,0 +1,20 @@
+{
+  "name": "moproject",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "css": "npx tailwindcss -i ./wwwroot/site.src.css -o ./wwwroot/site.css -w"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "tailwindcss": "^3.4.9"
+  },
+  "-vs-binding": {
+    "ProjectOpened": [
+      "css"
+    ]
+  }
+}

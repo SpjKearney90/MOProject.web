@@ -1,0 +1,36 @@
+﻿
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Margea Flower shop - @ViewBag.Title</title>
+    <link href="~/site.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/" rel="stylesheet" asp-append-version="true" />
+
+    @RenderSection("header", false)
+</head>
+<body>
+    <header class="flex
+w-full
+justify-between
+bg-purple-200
+p-3
+text-white">
+        <h1 class="text-2xl font-bold"></i>The Botanical Pantry </h1>
+        <ul class="text-black-900 flex">
+            <li class="mx-2 hover:text-blue-500"><a href="/">Home</a></li>
+            <li class="mx-2 hover:text-blue-500"><a href="/Contact">Contact</a></li>
+            <li class="mx-2 hover:text-blue-500"><a href="/TheCollection">Flower Collection</a></li>
+        </ul>
+    </header>
+    </ul>
+    </header>
+    <div class="h-[calc(100vh-75px)] w-full overflow-auto bg-gray-100 p-2">
+        @RenderBody()
+    </div>
+    <footer class="bg-black text-center text-white">&copy; 2024 Marges Botanical Shop</footer>
+    @RenderSection("scripts", false)
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js" integrity="sha512-uKQ39gEGiyUJl4AI6L+ekBdGKpGw4xJ55+xyJG7YFlJokPNYegn9KwQ3P8A7aFQAUtUsAQHep+d/lrGqrbPIDQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</body>
+</html>

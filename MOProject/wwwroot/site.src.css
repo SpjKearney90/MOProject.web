@@ -1,0 +1,54 @@
+﻿@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+:root {
+    --overlay: #03a9fa;
+    font-family: 'Poppins',sans-serif;
+}
+
+.showcase {
+    transition: .10s
+}   
+
+.showcase.active {
+    @apply right-72;
+    }
+
+.menu-a {
+   @apply text-2xl text-gray-800 no-underline hover:text-overlay;
+}
+
+input[type=text], input[type=email], textarea, select {
+    @apply border-2 w-full rounded border-zinc-900 p-1 text-lg;
+}
+
+h1, h2, h3, h4 {
+    @apply font-bold;
+}
+
+h1 {
+    @apply text-2xl;
+}
+
+h2 {
+    @apply text-xl;
+}
+
+h3 {
+    @apply text-lg;
+}
+
+h4 {
+    @apply text-lg italic;
+}
+
+button {
+    @apply rounded-lg bg-yellow-600 p-2 font-bold text-white hover:bg-black-800;
+}
+
+.field-validation-error {
+    @apply italic text-red-500;
+}
