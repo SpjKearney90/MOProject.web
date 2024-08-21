@@ -4,24 +4,26 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Margea Flower shop - @ViewBag.Title</title>
+    <title>Marges Flower shop - @ViewBag.Title</title>
     <link href="~/site.css" rel="stylesheet" asp-append-version="true" />
     <link href="~/" rel="stylesheet" asp-append-version="true" />
 
     @RenderSection("header", false)
 </head>
 <body>
-    <header class="flex
+<header class="flex
 w-full
-justify-between
-bg-purple-200
-p-3
+items-center
+justify-center
+bg-gray-400
 text-white">
-        <h1 class="text-2xl font-bold"></i>The Botanical Pantry </h1>
+        <img class="h-20 w-20 rounded-full" src="./Flower Logo .jpeg" alt="image description">
+        <h1 class="p-5 text-2xl font-bold"></i>The Botanical Pantry </h1>
         <ul class="text-black-900 flex">
-            <li class="mx-2 hover:text-blue-500"><a href="/">Home</a></li>
-            <li class="mx-2 hover:text-blue-500"><a href="/Contact">Contact</a></li>
-            <li class="mx-2 hover:text-blue-500"><a href="/TheCollection">Flower Collection</a></li>
+         <li class="mx-1 p-5 hover:text-blue-500"><a href="/">Home</a></li>
+         <li class="mx-1 p-5 hover:text-blue-500"><a href="/Contact">Contact</a></li>
+         <li class="mx-1 p-5 hover:text-blue-500"><a href="/TheCollection">Collection</a></li>
+         <li class="mx-1 p-5 hover:text-blue-500"><a href="/Blog">Blog</a></li>
         </ul>
     </header>
     </ul>
