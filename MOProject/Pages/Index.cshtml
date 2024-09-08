@@ -7,7 +7,6 @@
 
 <html lang="en">
 <head>
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Flower Shop @ViewBag.Title</title>
@@ -16,55 +15,97 @@
     <link rel="stylesheet" href="./site.css">
     <link rel="stylesheet" href="./site.src.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/js/all.min.js" integrity="sha512-6sSYJqDreZRZGkJ3b+YfdhB3MzmuP9R7X1QZ6g5aIXhRvR1Y/N/P47jmnkENm7YL3oqsmI6AK+V6AD99uWDnIw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
 </head>
-<body class="m-0 box-border p-0">
-    <p> this is for chnages b</p>
-    <section class="showcase z-10 absolute right-0 flex
-min-h-screen w-full items-center justify-between bg-black p-20 text-white
-transition duration-1000 ease-in-out">
-        <header class="absolute left-0 top-0 z-30 flex w-full items-center justify-between px-24 py-10 lg:p-10">
-            <h2 class="logo font-black cursor-pointer uppercase">The Botanical Pantry</h2>
-            <div class="toggle align-center relative cursor-pointer"><i class="fas fa-bars fa-2x"></i></div>
-        </header>
-        <video src="./Bg.mp4" muted loop autoplay class="absolute left-0 top-0 h-full w-full object-cover"></video>
 
-        @* <div class="overlay bg-overlay blend-screen absolute left-0 top-0 h-full w-full"></div> *@
+<body>
 
-        <div class="text z-40 relative">
-            <h2 class="text-7xl font-extrabold uppercase 2xl:text-4xl">The Botanical Pantry</h2>
-            <h3 class="my-5 max-w-2xl text-5xl font-normal 2xl:text-3xl">Please Support Irish Flower shops</h3>
-            <p class="my-5 max-w-2xl text-base font-normal">We are a small Irish based flower shop that can be found in Bray County Wicklow</p>
-            <a href="#" class="mt-2.5 inline-block bg-white px-7 py-2.5 text-xs uppercase tracking-wider text-gray-800 transition duration-200 ease-in-out hover:tracking-widest">Explore</a>
+    <header class="relative mt-1 flex items-center justify-center gap-4 px-8 pb-6 text-4xl font-extrabold">
+        <img class="h-20 w-20 rounded-full" src="./Flower Logo .jpeg" alt="image description">
+        <h1 class="inline-block">The Botanical Pantry</h1>  
+    </header>
+    <div class="bg-black h-0.5 w-10/12 mt-4 mx-auto"></div>
+
+
+    </ul>
+    </header>
+    
+    <!-- Main Content Section -->
+    <section class="relative w-full overflow-hidden">
+        <!-- First Section -->
+            <div class="text z-20 relative">
+               @*  <h2 class="text-7xl font-extrabold uppercase 2xl:text-4xl">The Botanical Pantry</h2>
+                <h3 class="my-5 max-w-2xl text-5xl font-normal 2xl:text-3xl">Please Support Irish Flower shops</h3>
+                <p class="my-5 max-w-2xl text-base font-normal">We are a small Irish based flower shop that can be found in Bray County Wicklow</p> *@
+            </div>
+        <div class="z-10 alt= sticky top-0 flex h-screen items-center justify-center
+bg-white"Custom Flowers" class="transition-opacity- h-full w-full object-cover" />
+            <div class="absolute left-0 right-0 m-auto flex w-2/4 flex-col items-start justify-center gap-4 p-10 backdrop-blur-xl">
+                <h2 class="text-2xl font-bold text-white">First Section</h2>
+                <p class="font-sans text-lg text-white">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,</p>
+                <a href="#" id="exploreButton" class="mt-2.5 inline-block bg-white px-7 py-2.5 text-xs uppercase tracking-wider text-gray-800 transition duration-200 ease-in-out hover:tracking-widest">
+                    Explore
+                </a>
+            </div>
         </div>
 
-        <ul class="social align-center absolute bottom-5 z-50 flex justify-center">
-            <li class="list-none"><a href="facebook.png" class="mr-5 inline-block scale-50 transform transition duration-75 hover:scale-50 hover:-translate-y-3.5"><i class="fab fa-facebook fa-2x"></i></a></li>
-            <li class="list-none"><a href="twitter.png" class="mr-5 inline-block scale-50 transform transition duration-75 hover:scale-50 hover:-translate-y-3.5"><i class="fab fa-twitter fa-2x"></i></a></li>
-            <li class="list-none"><a href="instagram.png" class="mr-5 inline-block scale-50 transform transition duration-75 hover:scale-50 hover:-translate-y-3.5"><i class="fab fa-instagram fa-2x"></i></a></li>
-        </ul>
+        <!-- Second Section -->
+        <div class="z-10 sticky top-0 flex h-screen items-center justify-center">
+            <img src="./Snow.jpg" alt="Snow" class="h-full w-full object-cover" />
+            <div class="absolute left-0 right-0 m-auto flex w-2/4 flex-col items-start justify-center gap-4 p-10 backdrop-blur-xl">
+                <h2 class="text-2xl font-bold text-white">Second Section</h2>
+                <p class="font-sans text-lg text-white">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,</p>
+            </div>
+        </div>
+
+        <!-- Third Section -->
+        <div class="z-10 sticky top-0 flex h-screen items-center justify-center">
+            <img src="./Wreath1.jpg" alt="Wreath" class="h-full w-full object-cover" />
+            <div class="absolute left-0 right-0 m-auto flex w-2/4 flex-col items-start justify-center gap-4 p-10 backdrop-blur-xl">
+                <h2 class="text-2xl font-bold text-white">Third Section</h2>
+                <p class="font-sans text-lg text-white">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,</p>
+            </div>
+        </div>
+
+        <!-- Fourth Section -->
+        <div class="z-10 sticky top-0 flex h-screen items-center justify-center">
+            <img src="./Spring.jpg" alt="Spring" class="h-full w-full object-cover" />
+            <div class="absolute left-0 right-0 m-auto flex w-2/4 flex-col items-start justify-center gap-4 p-10 backdrop-blur-xl">
+                <h2 class="text-2xl font-bold text-white">Fourth Section</h2>
+                <p class="font-sans text-lg text-white">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,</p>
+            </div>
+        </div>
     </section>
 
-    <div class="menu absolute right-0 top-0 flex h-screen w-72 items-center justify-center">
+    <!-- Social Media Links -->
+    <ul class="absolute bottom-5 z-50 flex w-full justify-center">
+        <li class="list-none"><a href="facebook.png" class="mr-5 inline-block transform transition duration-75 hover:scale-110 hover:-translate-y-1"><i class="fab fa-facebook fa-2x"></i></a></li>
+        <li class="list-none"><a href="twitter.png" class="mr-5 inline-block transform transition duration-75 hover:scale-110 hover:-translate-y-1"><i class="fab fa-twitter fa-2x"></i></a></li>
+        <li class="list-none"><a href="instagram.png" class="mr-5 inline-block transform transition duration-75 hover:scale-110 hover:-translate-y-1"><i class="fab fa-instagram fa-2x"></i></a></li>
+    </ul>
+
+    <!-- Sliding Menu -->
+    <div id="menu" class="z-40 fixed right-0 top-0 flex h-screen w-72 translate-x-full transform items-center justify-center bg-white shadow-lg transition-transform duration-500 ease-in-out">
         <ul class="relative list-none">
-            <li><a href="" class="menu-a">Home</a></li>
-            <li><a href="TheCollection" class="menu-a">Flower Collection</a></li>
-            <li><a href="" class="menu-a">Blog</a></li>
-            <li><a href="/Contact" class="menu-a">Contact</a></li>
+            <li><a href="#" class="menu-a block py-4 text-center">Home</a></li>
+            <li><a href="#" class="menu-a block py-4 text-center">Blog</a></li>
+            <li><a href="/Contact" class="menu-a block py-4 text-center">Contact</a></li>
         </ul>
     </div>
 
+    <!-- JavaScript for Sliding Menu -->
     <script>
-       const showcase = document.querySelector('.showcase')
-       const menuToggle = document.querySelector('.toggle');
-       menuToggle.addEventListener('click',()=>{
-           showcase.classList.toggle('active')
-        if(showcase.classList.contains('active')){
-            menuToggle.innerHTML = '<i class="fas fa-times fa-2x"></i>'
-        } else {
-            menuToggle.innerHTML = '<i class="fas fa-bars fa-2x">'
-        }
-       })
+        const exploreButton = document.getElementById('exploreButton');
+        const menu = document.getElementById('menu');
+
+        exploreButton.addEventListener('click', (event) => {
+            event.preventDefault(); // Prevent default anchor behavior
+            menu.classList.toggle('translate-x-full'); // Toggle sliding effect
+            if (menu.classList.contains('translate-x-full')) {
+                exploreButton.innerHTML = 'Explore'; // Change to default text
+            } else {
+                exploreButton.innerHTML = 'Close'; // Change to "Close" when menu is open
+            }
+        });
     </script>
 </body>
 </html>
