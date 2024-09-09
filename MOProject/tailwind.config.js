@@ -5,7 +5,13 @@ module.exports = {
         "./wwwroot/**/*.{html,cshtml}"
     ],
     theme: {
-        extend: {},
+        extend: {
+            fontFamily: {
+               
+                'MyFont': ["Playwrite+CU", 'serif'],
+            },
+        
+        },
     },
     plugins: [],
 },
