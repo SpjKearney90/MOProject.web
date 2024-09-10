@@ -8,7 +8,8 @@ module.exports = {
         extend: {
             fontFamily: {
                
-                'MyFont': ["Playwrite+CU", 'serif'],
+                'MyFont': ["Playwrite CU", 'cursive'], 
+                'casual': ["serif", 'cursive'],
             },
         
         },

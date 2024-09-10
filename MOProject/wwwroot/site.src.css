@@ -1,4 +1,4 @@
-﻿
+﻿@import url('https://fonts.googleapis.com/css2?family=Playwrite+CU:wght@100..400&display=swap');
 
 
 @tailwind base;
@@ -9,7 +9,8 @@
 
 :root {
     --overlay: #03a9fa;
-    font-family: 'Poppins',sans-serif;
+    font-family: 'Playwrite CU', cursive;
+    
 }
 
 .showcase {
