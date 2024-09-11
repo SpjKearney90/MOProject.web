@@ -1,5 +1,7 @@
-﻿@import url('https://fonts.googleapis.com/css2?family=Playwrite+CU:wght@100..400&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
+﻿@import url('https://fonts.googleapis.com/css2?family=Playwright+CU:wght@100;400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@100;400;700&display=swap');
+
+
 
 @tailwind base;
 @tailwind components;
@@ -8,8 +10,17 @@
 
 
 :root {
-    --overlay: #03a9fa;
-    font-family: 'Playwrite CU', cursive,"Roboto Mono", monospace;
+    --font-primary: 'Playwrite CU', cursive;
+    --font-casual: 'Roboto Mono', monospace;
+}
+
+/* Apply the font variables */
+body {
+    font-family: var(--font-primary);
+}
+
+.mono-text {
+    font-family: var(--font-casual);
 }
 
 .showcase {

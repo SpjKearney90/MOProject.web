@@ -7,8 +7,8 @@ module.exports = {
     theme: {
         extend: {
             fontFamily: {
-                'MyFont': ["Playwrite CU", 'cursive'],
-                'casual': ["Roboto Mono", 'monospace']
+                primary: ['Playwrite CU', 'cursive'],
+                casual: ['Roboto Mono', 'monospace'],
             },
             screens: {
                 'sm': '640px',
