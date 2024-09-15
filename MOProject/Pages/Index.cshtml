@@ -12,8 +12,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Flower Shop @ViewBag.Title</title>
     <link rel="stylesheet" href="./font-awesome/fontawesome.min.css">
-    <link rel="stylesheet" href="./site.css">
-    <link rel="stylesheet" href="./site.src.css">
+
+    <link rel="stylesheet" href="./css/site.css">
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/js/all.min.js" integrity="sha512-6sSYJqDreZRZGkJ3b+YfdhB3MzmuP9R7X1QZ6g5aIXhRvR1Y/N/P47jmnkENm7YL3oqsmI6AK+V6AD99uWDnIw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.10.2/dist/cdn.min.js" defer></script>
    
@@ -111,7 +112,7 @@
         <img src="./Wreath1.jpg" alt="Wreath" class="h-full w-full object-cover" />
         <div class="absolute left-0 right-0 m-auto flex w-2/4 flex-col items-start justify-center gap-4 p-10 backdrop-blur-xl">
             <h2 class="font-casual text-2xl font-bold text-white">Third Section</h2>
-            <p class="font-casual font-sans text-lg text-white">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+            <p class="font-casual text-lg text-white">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
         </div>
     </div>
 
@@ -133,11 +134,11 @@
     <!-- Sliding Menu -->
     <div id="menu" class="z-40 fixed right-0 top-0 flex h-screen w-72 translate-x-full transform items-center justify-center bg-white shadow-lg transition-transform duration-500 ease-in-out">
         <ul class="relative list-none">
-            <li><a href="#" class="menu-a block py-4 text-center">Home</a></li>
-            <li><a href="#" class="menu-a block py-4 text-center">Blog</a></li>
+            <li><a href="/Home" class="menu-a block py-4 text-center">Home</a></li>
+            <li><a href="/Blog" class="menu-a block py-4 text-center">Blog</a></li>
             <li><a href="/Contact" class="menu-a block py-4 text-center">Contact</a></li>
         </ul>
-    </div>g
+    </div>
 
     <!-- JavaScript for Sliding Menu -->
     <script>
