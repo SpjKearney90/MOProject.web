@@ -1,27 +1,16 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
     content: [
-        "./Pages/**/*.{html,cshtml}",
-        "./wwwroot/**/*.{html,cshtml}"
+        "./wwwroot/**/*.{html,js}",
+        "./Pages/**/*.{html,js}",
     ],
     theme: {
         extend: {
             fontFamily: {
-               
-                'MyFont': ["Playwrite CU", 'cursive'], 
-                'casual': ["serif", 'cursive'],
+                casual: ['Roboto Mono', 'monospace'],
+                primary: ['Playfair Display', 'cursive'],
             },
-        
         },
     },
     plugins: [],
-},
-
-screens: {
-    'sm': '640px',
-    'md': '768px',
-    'lg': '1024px',
-    'xl': '1280px',
-    '2xl': '1536px',
-
-    }
+};
