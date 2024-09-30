@@ -11,6 +11,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddRazorPages();
 builder.Services.AddTransient<IEmailService, DevTimeEmailService>();
+
+
+
+
 var connectingString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options=>options.UseSqlServer(connectingString));
 
@@ -55,6 +59,8 @@ app.MapRazorPages();
 app.Run();
 
 void DataSeeding()
+
+
 {
     using(var scope =app.Services.CreateScope())
     {
