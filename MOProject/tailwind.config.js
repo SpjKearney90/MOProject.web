@@ -9,6 +9,7 @@ module.exports = {
             fontFamily: {
                 casual: ['Roboto Mono', 'monospace'],
                 primary: ['Playfair Display', 'cursive'],
+                header: ["Cinzel", 'serif'],
             },
         },
     },

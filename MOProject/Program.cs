@@ -15,20 +15,20 @@ builder.Services.AddTransient<IEmailService, DevTimeEmailService>();
 
 
 
-var connectingString = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<ApplicationDbContext>(options=>options.UseSqlServer(connectingString));
+//var connectingString = builder.Configuration.GetConnectionString("DefaultConnection");
+//builder.Services.AddDbContext<ApplicationDbContext>(options=>options.UseSqlServer(connectingString));
 
-builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
-    .AddEntityFrameworkStores<ApplicationDbContext>()
-    .AddDefaultTokenProviders();
+//builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+//    .AddEntityFrameworkStores<ApplicationDbContext>()
+//    .AddDefaultTokenProviders();
 
 
-builder.Services.AddScoped<IDbInitializer, DbInitializer>();
+//builder.Services.AddScoped<IDbInitializer, DbInitializer>();
 
 
 
 var app = builder.Build();
-DataSeeding();
+//DataSeeding();
 
 if (builder.Environment.IsDevelopment())
 {
@@ -58,13 +58,13 @@ app.MapRazorPages();
 
 app.Run();
 
-void DataSeeding()
+//void DataSeeding()
 
 
-{
-    using(var scope =app.Services.CreateScope())
-    {
-        var DbInitialize = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
-        DbInitialize.Initialize();
-    }
-}
+//{
+//    using(var scope =app.Services.CreateScope())
+//    {
+//        var DbInitialize = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
+//        DbInitialize.Initialize();
+//    }
+//}
