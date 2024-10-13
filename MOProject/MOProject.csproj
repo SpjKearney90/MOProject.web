@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <None Include="Pages\Index.cshtml" />
+    <None Include="wwwroot\Blogstyles.css" />
   </ItemGroup>
 
   <ItemGroup>
