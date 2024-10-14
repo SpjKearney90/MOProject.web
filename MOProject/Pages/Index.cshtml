@@ -65,7 +65,7 @@
                     <source src="./Floral.mp4" type="video/mp4" />
                     Your browser does not support the video tag.
                 </video>
-                <div class="bg-white/50 absolute left-0 right-0 mx-auto flex max-w-3.5 flex-col items-start justify-center gap-2 p-4 backdrop-blur-xl">
+                <div class="bg-white/50 -translate-y-1/2 absolute left-0 right-0 top-1/2 mx-auto flex max-w-lg transform flex-col items-center justify-center gap-2 p-4 backdrop-blur-xl">
                     <h2 class="font-header text-xl font-bold text-black">First Section</h2>
                     <p class="font-casual text-base text-black">
                         Lorem Ipsum is simply dummy text of the printing and typesetting industry.
@@ -79,10 +79,11 @@
         </div>
 
         <!-- Second Section -->
+        <!-- Second Section -->
         <div class="z-10 flex-1 relative flex flex-col items-center justify-center bg-white p-20 text-center">
             <div class="w-full max-w-2xl">
                 <h2 class="font-header text-xl font-bold">Gallery</h2>
-                <div class="flex justify-between space-x-2">
+                <div class="mt-4 flex flex-wrap justify-center space-x-2 space-y-2">
                     <img alt="Gallery Image 1" class="image h-48 w-48 cursor-pointer rounded-lg object-cover" src="./Show1.jpg" onclick="openModal(this.src)" />
                     <img alt="Gallery Image 2" class="image h-48 w-48 cursor-pointer rounded-lg object-cover" src="./Show2.jpg" onclick="openModal(this.src)" />
                     <img alt="Gallery Image 3" class="image h-48 w-48 cursor-pointer rounded-lg object-cover" src="./Show3.jpg" onclick="openModal(this.src)" />
