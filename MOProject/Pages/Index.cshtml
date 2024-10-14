@@ -12,8 +12,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Flower Shop @ViewBag.Title</title>
     <link rel="stylesheet" href="./font-awesome/fontawesome.min.css">
-    <link rel="stylesheet" href="./site.css">
-    <link rel="stylesheet" href="./css/site.css">
+    <link rel="stylesheet" href="./site.css"> 
+    
+
+    @* <link rel="stylesheet" href="./css/site.css"> *@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/js/all.min.js" integrity="sha512-6sSYJqDreZRZGkJ3b+YfdhB3MzmuP9R7X1QZ6g5aIXhRvR1Y/N/P47jmnkENm7YL3oqsmI6AK+V6AD99uWDnIw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.10.2/dist/cdn.min.js" defer></script>
     <style>
@@ -49,112 +51,85 @@
         }
     </style>
 </head>
-<body>
-    <header class="relative mt-1 flex flex-col items-center justify-center gap-4 px-4 pb-6 text-2xl font-extrabold md:flex-row md:text-4xl">
-        <img class="h-48 w-48 rounded-full" src="./NewLogo.jpg" alt="Flower Logo">
-        <h1 class="font-header text-center text-2xl font-extralight">Wreaths by Margaret Maloney</h1>
-
-
+<body class="flex min-h-screen flex-col">
+    <header class="relative mt-1 flex flex-col items-center justify-center gap-4 px-4 pb-3 text-2xl font-extrabold md:flex-row md:text-4xl">
+        <img class="h-40 w-40 rounded-full" src="./NewLogo.jpg" alt="Flower Logo">
+        <h1 class="font-primary text-center text-2xl font-extralight">Wreaths by Margaret Maloney</h1>
     </header>
-
     <!-- Main Content -->
-    <!-- First Section -->
-    <div class="relative">
-        <div class="z-10 sticky top-0 flex h-screen items-center justify-center">
-            <video class="h-full w-full object-cover" autoplay muted loop>
-                <source src="./Floral.mp4" type="video/mp4" />
-                Your browser does not support the video tag.
-            </video>
-            <div class="bg-white/50 absolute left-0 right-0 m-auto flex w-11/12 max-w-3xl flex-col items-start justify-center gap-4 p-6 backdrop-blur-xl">
-                <h2 class="font-header text-xl font-bold text-black md:text-2xl">First Section</h2>
-                <p class="font-casual text-base text-black md:text-lg">
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.
-                </p>
-                <a href="#" id="exploreButton" class="border-2 mt-2.5 inline-block border-pink-500 bg-pink-200 px-6 py-2 text-xs uppercase tracking-wider text-gray-800 transition duration-200 ease-in-out hover:tracking-widest md:px-7 md:py-2.5">
-                    Explore
-                </a>
+    <div class="flex flex-grow flex-col">
+        <!-- First Section -->
+        <div class="flex-1 relative">
+            <div class="z-10 sticky top-0 flex h-full items-center justify-center">
+                <video class="h-full w-full object-cover" autoplay muted loop>
+                    <source src="./Floral.mp4" type="video/mp4" />
+                    Your browser does not support the video tag.
+                </video>
+                <div class="bg-white/50 absolute left-0 right-0 mx-auto flex max-w-3.5 flex-col items-start justify-center gap-2 p-4 backdrop-blur-xl">
+                    <h2 class="font-header text-xl font-bold text-black">First Section</h2>
+                    <p class="font-casual text-base text-black">
+                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                    </p>
+                    <a href="#" id="exploreButton" class="border-2 mt-2 inline-block border-pink-500 bg-pink-200 px-4 py-1 text-xs uppercase tracking-wider text-gray-800 transition duration-200 ease-in-out hover:tracking-widest">
+                        Explore
+                    </a>
+                </div>
+
             </div>
         </div>
-    </div>
 
-    <!-- Second Section -->
-    <div class="relative">
-        <div class="z-10 sticky top-0 flex h-screen items-center justify-center">
-            <div class="container mx-auto px-5 py-2 lg:px-32 lg:pt-12">
-                <div class="grid-cols-2 grid gap-2 md:grid-cols-4">
-                    <!-- Clickable images to trigger modal -->
-                    <div class="p-1">
-                        <img alt="Gallery Image 1"
-                             class="block h-full w-full cursor-pointer rounded-lg object-cover object-center"
-                             src="./Show1.jpg"
-                             onclick="openModal(this.src)" />
-                    </div>
-                    <div class="p-1">
-                        <img alt="Gallery Image 2"
-                             class="block h-full w-full cursor-pointer rounded-lg object-cover object-center"
-                             src="./Show2.jpg"
-                             onclick="openModal(this.src)" />
-                    </div>
-                    <div class="p-1">
-                        <img alt="Gallery Image 3"
-                             class="block h-full w-full cursor-pointer rounded-lg object-cover object-center"
-                             src="./Show3.jpg"
-                             onclick="openModal(this.src)" />
-                    </div>
-                    <div class="p-1">
-                        <img alt="Gallery Image 4"
-                             class="block h-full w-full cursor-pointer rounded-lg object-cover object-center"
-                             src="./Show4.jpg"
-                             onclick="openModal(this.src)" />
-                    </div>
+        <!-- Second Section -->
+        <div class="z-10 flex-1 relative flex flex-col items-center justify-center bg-white p-20 text-center">
+            <div class="w-full max-w-2xl">
+                <h2 class="font-header text-xl font-bold">Gallery</h2>
+                <div class="flex justify-between space-x-2">
+                    <img alt="Gallery Image 1" class="image h-48 w-48 cursor-pointer rounded-lg object-cover" src="./Show1.jpg" onclick="openModal(this.src)" />
+                    <img alt="Gallery Image 2" class="image h-48 w-48 cursor-pointer rounded-lg object-cover" src="./Show2.jpg" onclick="openModal(this.src)" />
+                    <img alt="Gallery Image 3" class="image h-48 w-48 cursor-pointer rounded-lg object-cover" src="./Show3.jpg" onclick="openModal(this.src)" />
+                    <img alt="Gallery Image 4" class="image h-48 w-48 cursor-pointer rounded-lg object-cover" src="./Show4.jpg" onclick="openModal(this.src)" />
+                    <img alt="Gallery Image 5" class="image h-48 w-48 cursor-pointer rounded-lg object-cover" src="./Show3.jpg" onclick="openModal(this.src)" />
+                    <img alt="Gallery Image 6" class="image h-48 w-48 cursor-pointer rounded-lg object-cover" src="./Show2.jpg" onclick="openModal(this.src)" />
+                </div>
+            </div>
+        </div>
+
+        <!-- Third Section -->
+        <div class="z-10 flex-1 relative flex flex-col items-center justify-center bg-black p-6 text-center">
+            <div class="w-full max-w-2xl">
+                <h2 class="font-casual text-2xl font-bold text-white">About Me</h2>
+                <div class="mt-4 flex flex-col items-center gap-4 md:flex-row md:gap-8">
+                    <img src="./Spring.jpg" alt="Profile Picture" class="border-4 h-40 w-40 rounded-full border-white object-cover">
+                    <p class="max-w-lg text-left text-white">
+                        [Your Name] - Florist & Floral Designer
+                        <br><br>
+                        With a passion for nature and creativity, [Your Name] has been transforming spaces with beautiful floral arrangements for over [X years]. Based in [Your Location], [he/she/they] specializes in crafting custom bouquets and centerpieces that capture the essence of each occasion, whether it’s a wedding, birthday, or corporate event.
+                    </p>
+                </div>
+                <h3 class="font-casual mb-3 mt-8 text-xl font-semibold text-white">Connect with Me</h3>
+                <div class="flex justify-center gap-4">
+                    <a href="#" class="flex h-10 w-10 items-center justify-center rounded-full bg-blue-600 text-white shadow hover:bg-blue-700">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="flex h-10 w-10 items-center justify-center rounded-full bg-pink-500 text-white shadow hover:bg-pink-600">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="flex h-10 w-10 items-center justify-center rounded-full bg-red-500 text-white shadow hover:bg-red-600">
+                        <i class="fab fa-pinterest-p"></i>
+                    </a>
                 </div>
             </div>
         </div>
     </div>
+
+
+     
+
 
     <!-- Modal Structure -->
     <div id="myModal" class="modal">
         <span class="close" onclick="closeModal()">&times;</span>
         <img class="modal-content" id="modalImg" />
     </div>
-
-    <!-- Third Section -->
-<div class="z-10 relative flex flex-col items-center justify-center bg-black p-6 text-center">
-    <div class="w-full max-w-2xl">
-        <h2 class="font-casual text-2xl font-bold text-white">About Me</h2>
-        <div class="mt-4 flex flex-col items-center gap-4 md:flex-row md:gap-8">
-            <img src="./Spring.jpg" alt="Profile Picture" class="border-4 h-48 w-48 rounded-full border-white object-cover">
-            <p class="max-w-lg text-left text-white">
-                [Your Name] - Florist & Floral Designer
-                <br><br>
-                With a passion for nature and creativity, [Your Name] has been transforming spaces with beautiful floral arrangements for over [X years]. Based in [Your Location], [he/she/they] specializes in crafting custom bouquets and centerpieces that capture the essence of each occasion, whether it’s a wedding, birthday, or corporate event.
-                <br><br>
-                When [he/she/they] isn’t arranging flowers, you can find [Your Name] exploring local markets, gardening, or sharing tips and inspiration on social media.
-                <br><br>
-                [Your Name] believes that flowers have the power to elevate any moment, bringing joy and beauty to everyday life. Inspired by the changing seasons, [his/her/their] designs feature a harmonious blend of colors, textures, and scents, ensuring that every arrangement tells a unique story.
-                <br><br>
-                In addition to creating stunning floral displays, [Your Name] is committed to sustainability, sourcing blooms from local growers whenever possible and using eco-friendly practices in [his/her/their] work.
-                <br><br>
-                Let [Your Name] help you celebrate life’s special moments with the perfect floral touch!
-            </p>
-        </div>
-
-        <h3 class="font-casual mb-3 mt-8 text-xl font-semibold text-white">Connect with Me</h3>
-        <div class="flex justify-center gap-4">
-            <a href="#" class="flex h-10 w-10 items-center justify-center rounded-full bg-blue-600 text-white shadow hover:bg-blue-700">
-                <i class="fab fa-facebook-f"></i>
-            </a>
-            <a href="#" class="flex h-10 w-10 items-center justify-center rounded-full bg-pink-500 text-white shadow hover:bg-pink-600">
-                <i class="fab fa-instagram"></i>
-            </a>
-            <a href="#" class="flex h-10 w-10 items-center justify-center rounded-full bg-red-500 text-white shadow hover:bg-red-600">
-                <i class="fab fa-pinterest-p"></i>
-            </a>
-        </div>
-    </div>
-</div>
-
-
 
     <!-- Sliding Menu -->
     <div id="menu" class="z-40 fixed right-0 top-0 flex h-screen w-72 translate-x-full transform items-center justify-center bg-white shadow-lg transition-transform duration-500 ease-in-out">
@@ -189,4 +164,4 @@
         }
     </script>
 </body>
-</html>
+

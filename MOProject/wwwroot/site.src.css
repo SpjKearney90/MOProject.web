@@ -45,3 +45,20 @@ button {
 .field-validation-error {
     @apply italic text-red-500;
 }
+.blur {
+    @apply backdrop-blur-md bg-white bg-opacity-50 rounded-lg p-6;
+}
+
+/* Additional custom styles */
+.container {
+    @apply relative flex items-center justify-center h-screen;
+}
+
+.background-layer {
+    @apply absolute inset-0 bg-gray-800 opacity-50;
+}
+
+/* Button styles */
+.btn-explore {
+    @apply border-2 border-pink-500 bg-pink-200 px-4 py-2 text-xs uppercase tracking-wider text-gray-800 transition duration-200 ease-in-out hover:tracking-widest;
+}
