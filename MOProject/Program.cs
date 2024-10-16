@@ -48,11 +48,14 @@ app.UseStaticFiles();
 app.MapRazorPages();
 
 
-//app.Run(async ctx =>
-//{
-//  await ctx.Response.WriteAsync("<html><body><h1>Welcome to FreeBilling</h1></body></html>");
-//});
+app.MapControllerRoute(
+    name: "area",
+    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 
+
+app.MapControllerRoute(
+    name: "Default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 
 
