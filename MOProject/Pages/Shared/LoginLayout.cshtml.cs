@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace MOProject.Pages.Shared
 {
-    public class LoginLayout : PageModel
+    public class LoginLayoutModel : PageModel
     {
         public void OnGet()
         {
