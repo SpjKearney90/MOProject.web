@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="Areas\Admin\Controllers\UserController.cs" />
     <Content Include="Pages\Index.cshtml.cs" />
   </ItemGroup>
 

@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using MOProject.Data;
 using MOProject.Models;
-using MOProject.Utilities;
 
 
-namespace MOProject.Utilites
+
+namespace MOProject.Utilities
 {
     public class DbInitializer : IDbInitializer
     {
@@ -32,13 +32,15 @@ namespace MOProject.Utilites
                     Email = "admin@gmail.com",
                     FirstName = "Super",
                     LastName = "Admin"
-                }, "Admin@0011").Wait();
+                }, "Admin1234").Wait();
 
                 var appUser = _context.ApplicationUsers!.FirstOrDefault(x => x.Email == "admin@gmail.com");
                 if (appUser != null)
                 {
                     _userManager.AddToRoleAsync(appUser, WebsiteRoles.WebsiteAdmin).GetAwaiter().GetResult();
                 }
+
+
                 var listOfPages = new List<Page>()
                 {
                     new Page()
@@ -58,13 +60,11 @@ namespace MOProject.Utilites
                     }
                  };
 
-                _context.Pages.AddRange(listOfPages);
-                _context.SaveChanges();
+                _context.Pages!.AddRange(listOfPages);
 
+                
 
             }
         }
-
-
-            }
+    }
 }
