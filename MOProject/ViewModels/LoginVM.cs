@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.Build.Framework;
 
 namespace MOProject.ViewModels
 {
@@ -8,7 +8,6 @@ namespace MOProject.ViewModels
         public string? Username { get; set; }
         [Required]
         public string? Password { get; set; }
-
         public bool RememberMe { get; set; }
     }
 }

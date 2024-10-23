@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using MOProject.Data;
 using MOProject.Models;
-
-
+using Microsoft.Extensions.Logging; // Add logger import
 
 namespace MOProject.Utilities
 {
@@ -11,60 +10,70 @@ namespace MOProject.Utilities
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly ILogger<DbInitializer> _logger;  // Add logger
+
         public DbInitializer(ApplicationDbContext context,
-                               UserManager<ApplicationUser> userManager,
-                               RoleManager<IdentityRole> roleManager)
+                             UserManager<ApplicationUser> userManager,
+                             RoleManager<IdentityRole> roleManager,
+                             ILogger<DbInitializer> logger)  // Update constructor
         {
             _context = context;
             _userManager = userManager;
             _roleManager = roleManager;
+            _logger = logger;  // Initialize logger
         }
 
         public void Initialize()
         {
-            if (!_roleManager.RoleExistsAsync(WebsiteRoles.WebsiteAdmin).GetAwaiter().GetResult())
+            _logger.LogInformation("Starting initialization.");
+
+            if (!_roleManager.RoleExistsAsync(WebsiteRoles.WebsiteAdmin!).GetAwaiter().GetResult())
             {
-                _roleManager.CreateAsync(new IdentityRole(WebsiteRoles.WebsiteAdmin)).GetAwaiter().GetResult();
-                _roleManager.CreateAsync(new IdentityRole(WebsiteRoles.WebsiteAuthor)).GetAwaiter().GetResult();
-                _userManager.CreateAsync(new ApplicationUser()
+                _roleManager.CreateAsync(new IdentityRole(WebsiteRoles.WebsiteAdmin!)).GetAwaiter().GetResult();
+                _logger.LogInformation("Created WebsiteAdmin role.");
+            }
+
+            if (!_roleManager.RoleExistsAsync(WebsiteRoles.WebsiteAuthor!).GetAwaiter().GetResult())
+            {
+                _roleManager.CreateAsync(new IdentityRole(WebsiteRoles.WebsiteAuthor!)).GetAwaiter().GetResult();
+                _logger.LogInformation("Created WebsiteAuthor role.");
+            }
+
+            var userExists = _userManager.FindByEmailAsync("admin@gmail.com").GetAwaiter().GetResult();
+            if (userExists == null)
+            {
+                _logger.LogInformation("Creating admin user.");
+                var user = new ApplicationUser()
                 {
                     UserName = "admin@gmail.com",
                     Email = "admin@gmail.com",
                     FirstName = "Super",
                     LastName = "Admin"
-                }, "Admin1234").Wait();
+                };
+                var result = _userManager.CreateAsync(user, "Admin1234!").GetAwaiter().GetResult();
 
-                var appUser = _context.ApplicationUsers!.FirstOrDefault(x => x.Email == "admin@gmail.com");
-                if (appUser != null)
+                if (result.Succeeded)
                 {
-                    _userManager.AddToRoleAsync(appUser, WebsiteRoles.WebsiteAdmin).GetAwaiter().GetResult();
+                    _logger.LogInformation("Admin user created successfully.");
+                    _userManager.AddToRoleAsync(user, WebsiteRoles.WebsiteAdmin!).GetAwaiter().GetResult();
+                    _logger.LogInformation("Admin user assigned to WebsiteAdmin role.");
                 }
-
-
-                var listOfPages = new List<Page>()
+                else
                 {
-                    new Page()
-                    {
-                         Title = "About Us",
-                        Slug = "about"
-                    },
-                    new Page()
-                    {
-                        Title = "Contact Us",
-                        Slug = "contact"
-                    },
-                    new Page()
-                    {
-                        Title = "Privacy Policy",
-                        Slug = "privacy"
-                    }
-                 };
-
-                _context.Pages!.AddRange(listOfPages);
-
-                
-
+                    _logger.LogError("Error creating admin user: {Errors}", string.Join(", ", result.Errors.Select(e => e.Description)));
+                }
             }
+
+            var listOfPages = new List<Page>()
+            {
+                new Page() { Title = "About Us", Slug = "about" },
+                new Page() { Title = "Contact Us", Slug = "contact" },
+                new Page() { Title = "Privacy Policy", Slug = "privacy" }
+            };
+
+            _context.Pages!.AddRange(listOfPages);
+            _context.SaveChanges();
+            _logger.LogInformation("Pages added successfully.");
         }
     }
 }
