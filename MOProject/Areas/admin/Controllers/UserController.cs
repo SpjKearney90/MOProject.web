@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using MOProject.Models;
 using MOProject.ViewModels;
-using Microsoft.Extensions.Logging;
+using System.Threading.Tasks;
 
 namespace MOProject.Areas.Admin.Controllers
 {
@@ -12,19 +11,21 @@ namespace MOProject.Areas.Admin.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly ILogger<UserController> _logger;
 
-        public UserController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, ILogger<UserController> logger)
+        public UserController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            _logger = logger;
+        }
+
+        public IActionResult Dash()
+        {
+            return View();
         }
 
         [HttpGet("Login")]
         public IActionResult Login()
         {
-            _logger.LogInformation("Login page accessed.");
             return View(new LoginVM());
         }
 
@@ -33,42 +34,24 @@ namespace MOProject.Areas.Admin.Controllers
         {
             if (!ModelState.IsValid)
             {
-                _logger.LogWarning("Validation error.");
-                foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
-                {
-                    _logger.LogWarning("Validation error: {ErrorMessage}", error.ErrorMessage);
-                }
                 return View(vm);
             }
 
-            _logger.LogInformation("Received Username: {Username}", vm.Username);
-            _logger.LogInformation("Received Password: {Password}", vm.Password);
-
-            var checkUsername = await _userManager.Users.FirstOrDefaultAsync(x => x.UserName == vm.Username);
-            if (checkUsername == null)
+            var existingUser = await _userManager.FindByEmailAsync(vm.Username);
+            if (existingUser == null)
             {
-                _logger.LogWarning("User not found.");
+                ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                 return View(vm);
             }
 
-            var verifyPassword = await _userManager.CheckPasswordAsync(checkUsername, vm.Password!);
-            if (!verifyPassword)
+            var result = await _signInManager.PasswordSignInAsync(existingUser, vm.Password, vm.RememberMe, lockoutOnFailure: true);
+            if (result.Succeeded)
             {
-                _logger.LogWarning("Incorrect password.");
-                return View(vm);
+                return RedirectToAction("Dash"); // Redirect after successful login
             }
 
-            await _signInManager.PasswordSignInAsync(vm.Username!, vm.Password!, vm.RememberMe, true);
-            _logger.LogInformation("User {Username} logged in successfully.", vm.Username);
-            _logger.LogInformation("Redirecting to Dash...");
-
-            return RedirectToAction("Dash", "User", new { area = "Admin" });
-        }
-
-        public IActionResult Dash()
-        {
-            _logger.LogInformation("Dash page accessed.");
-            return View();
+            ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+            return View(vm);
         }
     }
 }
