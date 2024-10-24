@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using MOProject.Data;
 using MOProject.Models;
-using Microsoft.Extensions.Logging; // Add logger import
+using Microsoft.Extensions.Logging;
 
 namespace MOProject.Utilities
 {
@@ -10,17 +10,17 @@ namespace MOProject.Utilities
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly ILogger<DbInitializer> _logger;  // Add logger
+        private readonly ILogger<DbInitializer> _logger;
 
         public DbInitializer(ApplicationDbContext context,
                              UserManager<ApplicationUser> userManager,
                              RoleManager<IdentityRole> roleManager,
-                             ILogger<DbInitializer> logger)  // Update constructor
+                             ILogger<DbInitializer> logger)
         {
             _context = context;
             _userManager = userManager;
             _roleManager = roleManager;
-            _logger = logger;  // Initialize logger
+            _logger = logger;
         }
 
         public void Initialize()
@@ -48,7 +48,14 @@ namespace MOProject.Utilities
                     UserName = "admin@gmail.com",
                     Email = "admin@gmail.com",
                     FirstName = "Super",
-                    LastName = "Admin"
+                    LastName = "Admin",
+                    EmailConfirmed = true,  // Ensure email is confirmed
+                    NormalizedEmail = "ADMIN@GMAIL.COM",
+                    NormalizedUserName = "ADMIN@GMAIL.COM",
+                    PhoneNumberConfirmed = false,
+                    TwoFactorEnabled = false,
+                    LockoutEnabled = true,
+                    AccessFailedCount = 0
                 };
                 var result = _userManager.CreateAsync(user, "Admin1234!").GetAwaiter().GetResult();
 
