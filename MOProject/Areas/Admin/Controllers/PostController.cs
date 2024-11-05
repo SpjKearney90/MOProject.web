@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MOProject.ViewModels;
 
 namespace MOProject.Areas.Admin.Controllers
 {
@@ -9,5 +10,15 @@ namespace MOProject.Areas.Admin.Controllers
         {
             return View();
         }
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View(new CreatePostVM());
+        }
+    
+    
+    
+    
+    
     }
 }
