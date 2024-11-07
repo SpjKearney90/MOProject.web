@@ -7,16 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="Areas\Admin\Views\Post\Create.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Content Include="Areas\Admin\Controllers\UserController.cs" />
     <Content Include="Pages\Index.cshtml.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Areas\Admin\Views\Post\Create.cshtml" />
     <None Include="Pages\Index.cshtml" />
     <None Include="wwwroot\Blogstyles.css" />
   </ItemGroup>
