@@ -71,16 +71,12 @@ namespace MOProject.Utilities
                 }
             }
 
-            var listOfPages = new List<Page>()
-            {
-                new Page() { Title = "About Us", Slug = "about" },
-                new Page() { Title = "Contact Us", Slug = "contact" },
-                new Page() { Title = "Privacy Policy", Slug = "privacy" }
-            };
+           
+        }
 
-            _context.Pages!.AddRange(listOfPages);
-            _context.SaveChanges();
-            _logger.LogInformation("Pages added successfully.");
+        public Task InitializeAsync()
+        {
+            throw new NotImplementedException();
         }
     }
 }
