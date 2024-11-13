@@ -2,25 +2,23 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualStudio.Services.WebApi;
 using MOProject.Data;
 using MOProject.Models;
-using MOProject.Utilities;
 using MOProject.ViewModels;
-using X.PagedList;
+
 using X.PagedList.Extensions;
-using X.PagedList.Mvc.Core;
 
 namespace FineBlog.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize]
+  
     public class PostController : Controller
     {
         private readonly ApplicationDbContext _context;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly UserManager<ApplicationUser> _userManager;
 
+        // Constructor injection
         public PostController(ApplicationDbContext context,
                                 IWebHostEnvironment webHostEnvironment,
                                 UserManager<ApplicationUser> userManager)
@@ -31,21 +29,12 @@ namespace FineBlog.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index(int? page)
+        public async Task<IActionResult> Dash(int? page)
         {
-            var listOfPosts = new List<Post>();
+            // Fetching all posts from the database since we assume there is only one admin
+            var listOfPosts = await _context.Posts!.Include(x => x.ApplicationUser).ToListAsync();
 
-            var loggedInUser = await _userManager.Users.FirstOrDefaultAsync(x => x.UserName == User.Identity!.Name);
-            var loggedInUserRole = await _userManager.GetRolesAsync(loggedInUser!);
-            if (loggedInUserRole[0] == WebsiteRoles.WebsiteAdmin)
-            {
-                listOfPosts = await _context.Posts!.Include(x => x.ApplicationUser).ToListAsync();
-            }
-            else
-            {
-                listOfPosts = await _context.Posts!.Include(x => x.ApplicationUser).Where(x => x.ApplicationUser!.Id == loggedInUser!.Id).ToListAsync();
-            }
-
+            // Transforming posts into ViewModel objects to pass to the view
             var listOfPostsVM = listOfPosts.Select(x => new PostVM()
             {
                 Id = x.Id,
@@ -61,7 +50,6 @@ namespace FineBlog.Areas.Admin.Controllers
             return View(listOfPostsVM.OrderByDescending(x => x.CreatedDate).ToPagedList(pageNumber, pageSize));
         }
 
-      
         [HttpGet]
         public IActionResult Create()
         {
@@ -71,18 +59,23 @@ namespace FineBlog.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreatePostVM vm)
         {
-            if (!ModelState.IsValid) { return View(vm); }
+            if (!ModelState.IsValid)
+            {
+                return View(vm);
+            }
 
-            //get logged in user id
+            // Assuming the logged-in user is the admin
             var loggedInUser = await _userManager.Users.FirstOrDefaultAsync(x => x.UserName == User.Identity!.Name);
 
-            var post = new Post();
+            var post = new Post
+            {
+                Title = vm.Title,
+                Description = vm.Description,
+                ShortDescription = vm.ShortDescription,
+                ApplicationUserId = loggedInUser!.Id
+            };
 
-            post.Title = vm.Title;
-            post.Description = vm.Description;
-            post.ShortDescription = vm.ShortDescription;
-            post.ApplicationUserId = loggedInUser!.Id;
-
+            // Generate slug
             if (post.Title != null)
             {
                 string slug = vm.Title!.Trim();
@@ -90,14 +83,17 @@ namespace FineBlog.Areas.Admin.Controllers
                 post.Slug = slug + "-" + Guid.NewGuid();
             }
 
+            // Handle thumbnail image upload if provided
             if (vm.Thumbnail != null)
             {
                 post.ThumbnailUrl = UploadImage(vm.Thumbnail);
             }
 
+            // Add the post to the database
             await _context.Posts!.AddAsync(post);
             await _context.SaveChangesAsync();
-            return RedirectToAction("Index");
+
+            return RedirectToAction("/Admin/User/dash");
         }
 
         [HttpPost]
@@ -105,15 +101,14 @@ namespace FineBlog.Areas.Admin.Controllers
         {
             var post = await _context.Posts!.FirstOrDefaultAsync(x => x.Id == id);
 
-            var loggedInUser = await _userManager.Users.FirstOrDefaultAsync(x => x.UserName == User.Identity!.Name);
-            var loggedInUserRole = await _userManager.GetRolesAsync(loggedInUser!);
-
-            if (loggedInUserRole[0] == WebsiteRoles.WebsiteAdmin || loggedInUser?.Id == post?.ApplicationUserId)
+            // Assuming the logged-in user is the admin (no role checks needed)
+            if (post != null)
             {
-                _context.Posts!.Remove(post!);
+                _context.Posts!.Remove(post);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("BlogPost", "Post", new { area = "Admin" });
+                return RedirectToAction("Dash", "User", new { area = "Admin" });
             }
+
             return View();
         }
 
@@ -126,13 +121,7 @@ namespace FineBlog.Areas.Admin.Controllers
                 return View();
             }
 
-            var loggedInUser = await _userManager.Users.FirstOrDefaultAsync(x => x.UserName == User.Identity!.Name);
-            var loggedInUserRole = await _userManager.GetRolesAsync(loggedInUser!);
-            if (loggedInUserRole[0] != WebsiteRoles.WebsiteAdmin && loggedInUser!.Id != post.ApplicationUserId)
-            {
-                return RedirectToAction("BlogPost");
-            }
-
+            // Mapping the existing post to the Edit view model
             var vm = new CreatePostVM()
             {
                 Id = post.Id,
@@ -148,7 +137,11 @@ namespace FineBlog.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(CreatePostVM vm)
         {
-            if (!ModelState.IsValid) { return View(vm); }
+            if (!ModelState.IsValid)
+            {
+                return View(vm);
+            }
+
             var post = await _context.Posts!.FirstOrDefaultAsync(x => x.Id == vm.Id);
             if (post == null)
             {
@@ -165,7 +158,8 @@ namespace FineBlog.Areas.Admin.Controllers
             }
 
             await _context.SaveChangesAsync();
-            return RedirectToAction("Index", "Post", new { area = "Admin" });
+
+            return RedirectToAction("Dash", "User", new { area = "Admin" });
         }
 
         private string UploadImage(IFormFile file)
