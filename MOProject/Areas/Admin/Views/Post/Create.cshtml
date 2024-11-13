@@ -1,19 +1,23 @@
 @model MOProject.ViewModels.CreatePostVM
 
+
 @{
     Layout = "BlogDashLayout";
     ViewData["Title"] = "Create Post";
 }
 
 <div class="container-fluid">
-    <a class="btn btn-primary mb-1" asp-action="dash" asp-controller="User">Go Back</a>
+    <!-- Button to navigate back to the dashboard -->
+    <a class="btn btn-primary mb-1" asp-action="BlogPost" asp-controller="Post" asp-area="Admin">Go Back</a>
+
     <div class="card">
         <div class="card-header bg-primary">
             <h4 class="card-title text-white">New Post</h4>
         </div>
         <div class="card-body">
-            <form asp-action="Create" asp-controller="Post" asp-area="dash" enctype="multipart/form-data">
-
+            <!-- Form to create new post -->
+            <form asp-action="Create" asp-controller="Post" asp-area="Admin" enctype="multipart/form-data">
+                <!-- Post Title, Description, and Content Fields -->
                 <div class="row mb-2">
                     <div class="col-9">
                         <div class="mb-2">
@@ -34,12 +38,20 @@
                     </div>
                     <div class="col-3">
                         <div class="mb-2">
-                            <img src="./thumbnail/Thumbnail.png" class="img-fluid" id="thumbnail" />
+                            <!-- Preview thumbnail if it exists -->
+                            @if (!string.IsNullOrEmpty(Model.ThumbnailUrl))
+                            {
+                                <img src="@Url.Content("~/thumbnails/" + Model.ThumbnailUrl)" class="img-fluid" id="thumbnail" />
+                            }
+                            else
+                            {
+                                <img src="@Url.Content("~/ThumbNail/Thumbnail.png")" class="img-fluid" id="thumbnail" />
+                            }
                         </div>
                         <div class="mb-2">
                             <label>Thumbnail</label>
                             <input type="file" asp-for="Thumbnail" class="custom-file" />
-                            <span asp-validation-for="Description" class="text-danger"></span>
+                            <span asp-validation-for="Thumbnail" class="text-danger"></span>
                         </div>
                     </div>
                 </div>
@@ -55,10 +67,17 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
     <script>
+        // Image preview on file selection
         $(".custom-file").on("change", function () {
             var fileName = $(this).val().split("\\").pop();
             $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
-            document.getElementById('thumbnail').src = window.URL.createObjectURL(this.files[0])
+
+            // Preview the selected image
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#thumbnail').attr('src', e.target.result);
+            };
+            reader.readAsDataURL(this.files[0]);
         });
     </script>
 }
