@@ -39,7 +39,10 @@ namespace MOProject.Areas.Admin.Controllers
             }
             else
             {
-                listOfPosts = await _context.Posts.Include(x => x.ApplicationUser).Where(x => x.ApplicationUser.Id == loggedInUser.Id).ToListAsync();
+                listOfPosts = await _context.Posts
+                    .Include(x => x.ApplicationUser)
+                    .Where(x => x.ApplicationUser.Id == loggedInUser.Id)
+                    .ToListAsync();
             }
 
             var listOfPostsVM = listOfPosts.Select(x => new PostVM
@@ -48,22 +51,24 @@ namespace MOProject.Areas.Admin.Controllers
                 Title = x.Title,
                 CreatedDate = x.CreatedDate,
                 ThumbnailUrl = x.ThumbnailUrl,
-                AuthorName = x.ApplicationUser.FirstName + " " + x.ApplicationUser.LastName
+                AuthorName = $"{x.ApplicationUser.FirstName} {x.ApplicationUser.LastName}"
             }).ToList();
 
             int pageSize = 5;
-            int pageNumber = (page ?? 1);
+            int pageNumber = page ?? 1;
 
             return View(listOfPostsVM.OrderByDescending(x => x.CreatedDate).ToPagedList(pageNumber, pageSize));
         }
 
         [HttpGet("Login")]
+        [AllowAnonymous] // Allow anonymous access to the Login page
         public IActionResult Login()
         {
             return View(new LoginVM());
         }
 
         [HttpPost("Login")]
+        [AllowAnonymous] // Allow anonymous access to the Login POST method
         public async Task<IActionResult> Login(LoginVM vm)
         {
             if (!ModelState.IsValid)
