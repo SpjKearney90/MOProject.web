@@ -9,17 +9,14 @@ namespace MOProject.Utilities
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly ILogger<DbInitializer> _logger;
 
         public DbInitializer(ApplicationDbContext context,
                              UserManager<ApplicationUser> userManager,
-                             RoleManager<IdentityRole> roleManager,
                              ILogger<DbInitializer> logger)
         {
             _context = context;
             _userManager = userManager;
-            _roleManager = roleManager;
             _logger = logger;
         }
 
@@ -27,18 +24,7 @@ namespace MOProject.Utilities
         {
             _logger.LogInformation("Starting initialization.");
 
-            if (!_roleManager.RoleExistsAsync(WebsiteRoles.WebsiteAdmin!).GetAwaiter().GetResult())
-            {
-                _roleManager.CreateAsync(new IdentityRole(WebsiteRoles.WebsiteAdmin!)).GetAwaiter().GetResult();
-                _logger.LogInformation("Created WebsiteAdmin role.");
-            }
-
-            if (!_roleManager.RoleExistsAsync(WebsiteRoles.WebsiteAuthor!).GetAwaiter().GetResult())
-            {
-                _roleManager.CreateAsync(new IdentityRole(WebsiteRoles.WebsiteAuthor!)).GetAwaiter().GetResult();
-                _logger.LogInformation("Created WebsiteAuthor role.");
-            }
-
+            // Check if the admin user exists
             var userExists = _userManager.FindByEmailAsync("admin@gmail.com").GetAwaiter().GetResult();
             if (userExists == null)
             {
@@ -57,21 +43,22 @@ namespace MOProject.Utilities
                     LockoutEnabled = true,
                     AccessFailedCount = 0
                 };
+
                 var result = _userManager.CreateAsync(user, "Admin1234!").GetAwaiter().GetResult();
 
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("Admin user created successfully.");
-                    _userManager.AddToRoleAsync(user, WebsiteRoles.WebsiteAdmin!).GetAwaiter().GetResult();
-                    _logger.LogInformation("Admin user assigned to WebsiteAdmin role.");
                 }
                 else
                 {
                     _logger.LogError("Error creating admin user: {Errors}", string.Join(", ", result.Errors.Select(e => e.Description)));
                 }
             }
-
-           
+            else
+            {
+                _logger.LogInformation("Admin user already exists.");
+            }
         }
 
         public Task InitializeAsync()
