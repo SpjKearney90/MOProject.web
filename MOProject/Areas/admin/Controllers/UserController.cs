@@ -1,26 +1,60 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using MOProject.Data;
 using MOProject.Models;
 using MOProject.ViewModels;
+using X.PagedList;
 using System.Threading.Tasks;
+using MOProject.Utilities;
+using X.PagedList.Extensions;
 
 namespace MOProject.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize]
     public class UserController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly ApplicationDbContext _context;
 
-        public UserController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+        public UserController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, ApplicationDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _context = context;
         }
 
-        public IActionResult Dash()
+        public async Task<IActionResult> Dash(int? page)
         {
-            return View();
+            var listOfPosts = new List<Post>();
+
+            var loggedInUser = await _userManager.Users.FirstOrDefaultAsync(x => x.UserName == User.Identity!.Name);
+            var loggedInUserRole = await _userManager.GetRolesAsync(loggedInUser!);
+            if (loggedInUserRole[0] == WebsiteRoles.WebsiteAdmin)
+            {
+                listOfPosts = await _context.Posts.Include(x => x.ApplicationUser).ToListAsync();
+            }
+            else
+            {
+                listOfPosts = await _context.Posts.Include(x => x.ApplicationUser).Where(x => x.ApplicationUser.Id == loggedInUser.Id).ToListAsync();
+            }
+
+            var listOfPostsVM = listOfPosts.Select(x => new PostVM
+            {
+                Id = x.Id,
+                Title = x.Title,
+                CreatedDate = x.CreatedDate,
+                ThumbnailUrl = x.ThumbnailUrl,
+                AuthorName = x.ApplicationUser.FirstName + " " + x.ApplicationUser.LastName
+            }).ToList();
+
+            int pageSize = 5;
+            int pageNumber = (page ?? 1);
+
+            return View(listOfPostsVM.OrderByDescending(x => x.CreatedDate).ToPagedList(pageNumber, pageSize));
         }
 
         [HttpGet("Login")]
