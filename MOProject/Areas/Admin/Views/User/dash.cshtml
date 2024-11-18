@@ -1,9 +1,12 @@
 ﻿@using X.PagedList
 @using X.PagedList.Mvc.Core
 @model IPagedList<MOProject.ViewModels.PostVM>
+@using MOProject.Models
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
 
 @{
-    // Layout = "BlogDashLayout";
+    Layout = "BlogDashLayout";
     ViewData["Title"] = "Dash";
 }
 

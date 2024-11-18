@@ -5,13 +5,11 @@ using Microsoft.EntityFrameworkCore;
 using MOProject.Data;
 using MOProject.Models;
 using MOProject.ViewModels;
-
 using X.PagedList.Extensions;
 
 namespace FineBlog.Areas.Admin.Controllers
 {
     [Area("Admin")]
-  
     public class PostController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -20,8 +18,8 @@ namespace FineBlog.Areas.Admin.Controllers
 
         // Constructor injection
         public PostController(ApplicationDbContext context,
-                                IWebHostEnvironment webHostEnvironment,
-                                UserManager<ApplicationUser> userManager)
+                              IWebHostEnvironment webHostEnvironment,
+                              UserManager<ApplicationUser> userManager)
         {
             _context = context;
             _webHostEnvironment = webHostEnvironment;
@@ -31,11 +29,8 @@ namespace FineBlog.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Dash(int? page)
         {
-            // Fetching all posts from the database since we assume there is only one admin
             var listOfPosts = await _context.Posts!.Include(x => x.ApplicationUser).ToListAsync();
-
-            // Transforming posts into ViewModel objects to pass to the view
-            var listOfPostsVM = listOfPosts.Select(x => new PostVM()
+            var listOfPostsVM = listOfPosts.Select(x => new PostVM
             {
                 Id = x.Id,
                 Title = x.Title,
@@ -45,7 +40,7 @@ namespace FineBlog.Areas.Admin.Controllers
             }).ToList();
 
             int pageSize = 5;
-            int pageNumber = (page ?? 1);
+            int pageNumber = page ?? 1;
 
             return View(listOfPostsVM.OrderByDescending(x => x.CreatedDate).ToPagedList(pageNumber, pageSize));
         }
@@ -61,54 +56,61 @@ namespace FineBlog.Areas.Admin.Controllers
         {
             if (!ModelState.IsValid)
             {
+                // Logging errors for debugging
+                var errors = ModelState.Values.SelectMany(v => v.Errors);
+                foreach (var error in errors)
+                {
+                    Console.WriteLine(error.ErrorMessage);
+                }
                 return View(vm);
             }
 
-            // Assuming the logged-in user is the admin
             var loggedInUser = await _userManager.Users.FirstOrDefaultAsync(x => x.UserName == User.Identity!.Name);
+
+            if (loggedInUser == null)
+            {
+                ModelState.AddModelError("", "User not found.");
+                return View(vm);
+            }
 
             var post = new Post
             {
                 Title = vm.Title,
                 Description = vm.Description,
                 ShortDescription = vm.ShortDescription,
-                ApplicationUserId = loggedInUser!.Id
+                ApplicationUserId = loggedInUser.Id
             };
 
             // Generate slug
-            if (post.Title != null)
+            if (!string.IsNullOrWhiteSpace(post.Title))
             {
-                string slug = vm.Title!.Trim();
-                slug = slug.Replace(" ", "-");
+                string slug = vm.Title!.Trim().Replace(" ", "-");
                 post.Slug = slug + "-" + Guid.NewGuid();
             }
 
-            // Handle thumbnail image upload if provided
             if (vm.Thumbnail != null)
             {
                 post.ThumbnailUrl = UploadImage(vm.Thumbnail);
             }
 
-            // Add the post to the database
             await _context.Posts!.AddAsync(post);
             await _context.SaveChangesAsync();
 
-            return RedirectToAction("/Admin/User/dash");
+            return RedirectToAction("Dash", "User", new { area = "Admin" });
         }
 
         [HttpPost]
         public async Task<IActionResult> Delete(int id)
         {
             var post = await _context.Posts!.FirstOrDefaultAsync(x => x.Id == id);
-
-            // Assuming the logged-in user is the admin (no role checks needed)
             if (post != null)
             {
-                _context.Posts!.Remove(post);
+                _context.Posts.Remove(post);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Dash", "User", new { area = "Admin" });
             }
 
+            ModelState.AddModelError("", "Post not found.");
             return View();
         }
 
@@ -118,17 +120,17 @@ namespace FineBlog.Areas.Admin.Controllers
             var post = await _context.Posts!.FirstOrDefaultAsync(x => x.Id == id);
             if (post == null)
             {
+                ModelState.AddModelError("", "Post not found.");
                 return View();
             }
 
-            // Mapping the existing post to the Edit view model
-            var vm = new CreatePostVM()
+            var vm = new CreatePostVM
             {
                 Id = post.Id,
                 Title = post.Title,
                 ShortDescription = post.ShortDescription,
                 Description = post.Description,
-                ThumbnailUrl = post.ThumbnailUrl,
+                ThumbnailUrl = post.ThumbnailUrl
             };
 
             return View(vm);
@@ -139,12 +141,18 @@ namespace FineBlog.Areas.Admin.Controllers
         {
             if (!ModelState.IsValid)
             {
+                var errors = ModelState.Values.SelectMany(v => v.Errors);
+                foreach (var error in errors)
+                {
+                    Console.WriteLine(error.ErrorMessage);
+                }
                 return View(vm);
             }
 
             var post = await _context.Posts!.FirstOrDefaultAsync(x => x.Id == vm.Id);
             if (post == null)
             {
+                ModelState.AddModelError("", "Post not found.");
                 return View();
             }
 
@@ -164,14 +172,16 @@ namespace FineBlog.Areas.Admin.Controllers
 
         private string UploadImage(IFormFile file)
         {
-            string uniqueFileName = "";
+            string uniqueFileName = Guid.NewGuid().ToString() + "_" + file.FileName;
             var folderPath = Path.Combine(_webHostEnvironment.WebRootPath, "thumbnails");
-            uniqueFileName = Guid.NewGuid().ToString() + "_" + file.FileName;
             var filePath = Path.Combine(folderPath, uniqueFileName);
+            Directory.CreateDirectory(folderPath); // Ensure the directory exists
+
             using (FileStream fileStream = System.IO.File.Create(filePath))
             {
                 file.CopyTo(fileStream);
             }
+
             return uniqueFileName;
         }
     }
