@@ -1,6 +1,6 @@
-﻿namespace MOProject.Models
+﻿namespace MOProject.ViewModels
 {
-    public class Settingsadd
+    public class SettingVM
     {
 
         public int Id { get; set; }
@@ -12,10 +12,11 @@
 
         public string? ThumbnailUrl { get; set; }
 
-        public string? FacebookUrl  { get; set; }
+        public string? FacebookUrl { get; set; }
 
         public string? InstagramUrl { get; set; }
 
+        public IFormFile? Thumbnail {  get; set; }
 
     }
 }
