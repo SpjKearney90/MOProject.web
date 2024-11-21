@@ -117,7 +117,7 @@
     </div>
 
    
-    <script src="~/Admin/vendor/bootstrap/js/bootstrap.js"></script>
+   <script src="~/Admin/vendor/bootstrap/js/bootstrap.js"></script>
    <script src="~/Admin/js/sb-admin-2.js"></script>
    <script src="~/Admin/js/scripts.js"></script>
    <script src="~/Admin/vendor/bootstrap/js/bootstrap.bundle.js"></script>
@@ -130,6 +130,19 @@
     ﻿
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="https://cdn.tiny.cloud/1/6ga5z4ob4jegyks1dx36pc4r9e32o30y9ovhui4xgp68yvvx/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+        // Initialize TinyMCE for the Description text area
+        tinymce.init({
+            selector: 'textarea[name="Description"]', // Matches by the name attribute
+            height: 300,
+            plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
+            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
+
+
+            menubar: false
+        });
+    </script>
 
     @RenderSection("scripts", false)  <!-- Render scripts section if defined in the view -->
 </body>
