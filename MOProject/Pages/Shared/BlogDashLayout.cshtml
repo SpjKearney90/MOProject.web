@@ -7,13 +7,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>@ViewData["Add a Blog"]</title> <!-- Use ViewData to inject dynamic titles -->
+    <title>@ViewData["Title"]</title>
+
     <!-- Custom fonts for this template -->
     <link href="~/Admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <link href="~/assets/sb-admin-2.css" rel="stylesheet">
 
-    @RenderSection("header", false)  <!-- Render header section if defined in the view -->
+    @RenderSection("header", false)
 </head>
 
 <body id="page-top">
@@ -24,15 +25,15 @@
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">Marges Blog Post addition<sup>2</sup></div>
+                <div class="sidebar-brand-text mx-3">Marges Blog Post<sup>2</sup></div>
             </a>
 
             <hr class="sidebar-divider my-0">
 
             <li class="nav-item">
-                <a class="nav-link" asp-area="Admin" asp-controller="Post" asp-action="BlogPost">
-                    <i class="fas fa-fw fa-pencil-alt"></i>
-                    <span>Post</span>
+                <a class="nav-link" asp-area="Admin" asp-controller="Settings" asp-action="Index">
+                    <i class="fas fa-fw fa-gear-alt"></i>
+                    <span>Settings</span>
                 </a>
             </li>
 
@@ -68,31 +69,28 @@
                     </li>
                 </nav>
 
-                <!-- Main content -->
+                <!-- Main Content -->
                 <div class="container-fluid">
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">@ViewData["Title"]</h1>  <!-- Display dynamic title -->
-                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-                            <i class="fas fa-download fa-sm text-white-50"></i> Generate Report
-                        </a>
+                        <h1 class="h3 mb-0 text-gray-800">@ViewData["Title"]</h1>
                     </div>
 
-                    @RenderBody()  <!-- Render the body content of individual views -->
-                    <!-- Footer -->
-                    <footer class="sticky-footer bg-white">
-                        <div class="container my-auto">
-                            <div class="copyright text-center my-auto">
-                                <span>Copyright &copy; Wreaths By Margaret Maloney 2024</span>
-                            </div>
-                        </div>
-                    </footer>
+                    @RenderBody()
                 </div>
+
+                <!-- Footer -->
+                <footer class="sticky-footer bg-white">
+                    <div class="container my-auto">
+                        <div class="copyright text-center my-auto">
+                            <span>Copyright &copy; Wreaths By Margaret Maloney 2024</span>
+                        </div>
+                    </div>
+                </footer>
             </div>
         </div>
     </div>
 
-
-    <!-- Scroll to top button -->
+    <!-- Scroll to Top Button -->
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
@@ -104,7 +102,7 @@
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
+                        <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
@@ -116,35 +114,25 @@
         </div>
     </div>
 
-   
-   <script src="~/Admin/vendor/bootstrap/js/bootstrap.js"></script>
-   <script src="~/Admin/js/sb-admin-2.js"></script>
-   <script src="~/Admin/js/scripts.js"></script>
-   <script src="~/Admin/vendor/bootstrap/js/bootstrap.bundle.js"></script>
-
-  <script src="~/Admin/vendor/jquery/jquery.slim.js"></script> 
-  <script src="~/Admin/vendor/jquery/jquery.js"></script>
-    
+    <!-- Scripts -->
+    <script src="~/Admin/vendor/bootstrap/js/bootstrap.bundle.js"></script>
+    <script src="~/Admin/vendor/jquery/jquery.js"></script>
     <script src="~/Admin/vendor/jquery-easing/jquery.easing.js"></script>
-
-    ﻿
+    <script src="~/Admin/js/sb-admin-2.js"></script>
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
     <script src="https://cdn.tiny.cloud/1/6ga5z4ob4jegyks1dx36pc4r9e32o30y9ovhui4xgp68yvvx/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
     <script>
-        // Initialize TinyMCE for the Description text area
         tinymce.init({
-            selector: 'textarea[name="Description"]', // Matches by the name attribute
+            selector: 'textarea[name="Description"]',
             height: 300,
             plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
             toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
-
-
             menubar: false
         });
     </script>
 
-    @RenderSection("scripts", false)  <!-- Render scripts section if defined in the view -->
+    @RenderSection("scripts", false)
 </body>
-
 </html>
+

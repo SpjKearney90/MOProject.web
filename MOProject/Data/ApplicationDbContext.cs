@@ -14,10 +14,8 @@ namespace MOProject.Data
         public DbSet<Post>? Posts { get; set; }
         public DbSet<Page>? Pages { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder builder)
-        {
-            base.OnModelCreating(builder);
-            // Additional configurations if needed
-        }
+        public DbSet<Settingsadd> Settingsadd { get; set; }
+
+       
     }
 }
