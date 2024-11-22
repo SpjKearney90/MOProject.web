@@ -1,120 +1,102 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
-using MOProject.Data;  // Updated namespace for ApplicationDbContext
-using MOProject.Models;  // Updated namespace for Setting and ApplicationUser
-using MOProject.ViewModels; // Assuming ViewModel is in the same namespace or relevant namespace
+using MOProject.Data;
+using MOProject.Models;
+using MOProject.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Hosting;
 
-namespace MOProject.Areas.Admin.Controllers // Adjusted to match your project namespace
+namespace MOProject.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Authorize(Roles = "Admin")]
     public class SettingController : Controller
     {
         private readonly ApplicationDbContext _context;
-        
         private readonly IWebHostEnvironment _webHostEnvironment;
 
-        // Constructor to initialize dependencies
-        public SettingController(ApplicationDbContext context,
-                              
-                                 IWebHostEnvironment webHostEnvironment)
+        public SettingController(ApplicationDbContext context, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
-          
             _webHostEnvironment = webHostEnvironment;
         }
 
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            // Fetch the settings from the database
-            var settings = await _context.Settings!.ToListAsync();
-            if (settings.Count > 0)
+            // Fetch or create settings
+            var setting = await _context.Settings!.FirstOrDefaultAsync();
+            if (setting == null)
             {
-                var vm = new SettingsVM()
+                setting = new Setting1
                 {
-                    Id1 = settings[0].Id1,
-                    SiteName1 = settings[0].SiteName1,
-                    Title1 = settings[0].Title1,
-                    ShortDescription1 = settings[0].ShortDescription1,
-                    ThumbnailUrl1 = settings[0].ThumbnailUrl1,
-                    FacebookUrl1 = settings[0].FacebookUrl1,
-                    InstagramUrl1 = settings[0].InstagramUrl1,
-
+                    SiteName1 = "Demo Name"
                 };
-                return View(vm);
+
+                await _context.Settings.AddAsync(setting);
+                await _context.SaveChangesAsync();
             }
 
-            // If no settings are found, create a default setting
-            var setting = new Setting1()
-            {
-                SiteName = "Demo Name",
-            };
-            await _context.Settings!.AddAsync(setting);
-            await _context.SaveChangesAsync();
-
-            var createdSettings = await _context.Settings!.ToListAsync();
-            var createdVm = new SettingsVM()
-            {
-                Id1 = createdSettings[0].Id1,
-                SiteName1 = createdSettings[0].SiteName1,
-                Title1 = createdSettings[0].Title1,
-                ShortDescription1 = createdSettings[0].ShortDescription1,
-                ThumbnailUrl1 = createdSettings[0].ThumbnailUrl1,
-                FacebookUrl1 = createdSettings[0].FacebookUrl1,
-                InstagramUrl1 = createdSettings[0].InstagramUrl1,
-
-            };
-            return View(createdVm);
+            var vm = MapToViewModel(setting);
+            return View(vm);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Index(SettingsVM vm)
+        public async Task<IActionResult> Index(Settings1VM vm)
         {
-            // Validate the model
-            if (!ModelState.IsValid) { return View(vm); }
+            if (!ModelState.IsValid) return View(vm);
 
-            // Retrieve the setting to update
+            // Find the setting and update its properties
             var setting = await _context.Settings!.FirstOrDefaultAsync(x => x.Id1 == vm.Id1);
-            if (setting == null)
+            if (setting == null) return View(vm);
+
+            UpdateSetting(setting, vm);
+
+            if (vm.Thumbnail1 != null)
             {
-                
-                return View(vm);
+                setting.ThumbnailUrl1 = UploadImage(vm.Thumbnail1);
             }
 
-            // Update setting properties
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        private string UploadImage(IFormFile file)
+        {
+            var uniqueFileName = $"{Guid.NewGuid()}_{file.FileName}";
+            var folderPath = Path.Combine(_webHostEnvironment.WebRootPath, "thumbnails");
+            Directory.CreateDirectory(folderPath); // Ensure the directory exists
+
+            var filePath = Path.Combine(folderPath, uniqueFileName);
+            using (var fileStream = new FileStream(filePath, FileMode.Create))
+            {
+                file.CopyTo(fileStream);
+            }
+
+            return uniqueFileName;
+        }
+
+        private Settings1VM MapToViewModel(Setting1 setting)
+        {
+            return new Settings1VM
+            {
+                Id1 = setting.Id1,
+                SiteName1 = setting.SiteName1,
+                Title1 = setting.Title1,
+                ShortDescription1 = setting.ShortDescription1,
+                ThumbnailUrl1 = setting.ThumbnailUrl1,
+                FacebookUrl1 = setting.FacebookUrl1,
+                InstagramUrl1 = setting.InstagramUrl1
+            };
+        }
+
+        private void UpdateSetting(Setting1 setting, Settings1VM vm)
+        {
             setting.SiteName1 = vm.SiteName1;
             setting.Title1 = vm.Title1;
             setting.ShortDescription1 = vm.ShortDescription1;
             setting.FacebookUrl1 = vm.FacebookUrl1;
-
-
-            //if (vm.Thumbnail != null)
-            //{
-            //    setting.ThumbnailUrl = UploadImage(vm.Thumbnail);
-            //}
-
-            // Save changes to the database
-            await _context.SaveChangesAsync();
-           
-            return RedirectToAction("Index", "Setting", new { area = "Admin" });
-        }
-
-        // Helper method to upload image and generate unique file name
-        private string UploadImage(IFormFile file)
-        {
-            string uniqueFileName = "";
-            var folderPath = Path.Combine(_webHostEnvironment.WebRootPath, "thumbnails");
-            uniqueFileName = Guid.NewGuid().ToString() + "_" + file.FileName;
-            var filePath = Path.Combine(folderPath, uniqueFileName);
-            using (FileStream fileStream = System.IO.File.Create(filePath))
-            {
-                file.CopyTo(fileStream);
-            }
-            return uniqueFileName;
+            setting.InstagramUrl1 = vm.InstagramUrl1;
         }
     }
 }

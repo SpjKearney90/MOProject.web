@@ -1,8 +1,11 @@
-﻿namespace MOProject.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace MOProject.Models
 {
     public class Setting1
     {
-        public int Id1 { get; set; }
+        [Key] // Specify this as the primary key
+        public int Id1 { get; set; } // Or another property as the key
         public string? SiteName1 { get; set; }
         public string? Title1 { get; set; }
         public string? ShortDescription1 { get; set; }

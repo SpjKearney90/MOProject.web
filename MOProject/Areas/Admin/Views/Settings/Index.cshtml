@@ -1,4 +1,4 @@
-﻿@model MOProject.ViewModels.SettingsVM
+﻿@model MOProject.ViewModels.Settings1VM
 @using MOProject.Models
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
@@ -15,64 +15,64 @@
         </div>
         <div class="card-body">
             <form asp-action="Index" asp-controller="Settings" asp-area="Admin" enctype="multipart/form-data">
-                <input type="hidden" asp-for="Id" />
+                <input type="hidden" asp-for="Id1" />
 
                 <div class="row mb-2">
                     <div class="col-9">
                         <!-- SiteName Field -->
                         <div class="mb-2">
-                            <label asp-for="SiteName" class="form-label">Site Name</label>
-                            <input asp-for="SiteName" class="form-control" />
-                            <span asp-validation-for="SiteName" class="text-danger"></span>
+                            <label asp-for="SiteName1" class="form-label">Site Name</label>
+                            <input asp-for="SiteName1" class="form-control" />
+                            <span asp-validation-for="SiteName1" class="text-danger"></span>
                         </div>
 
                         <!-- Title Field -->
                         <div class="mb-2">
-                            <label asp-for="Title" class="form-label">Title</label>
-                            <input asp-for="Title" class="form-control" />
-                            <span asp-validation-for="Title" class="text-danger"></span>
+                            <label asp-for="Title1" class="form-label">Title</label>
+                            <input asp-for="Title1" class="form-control" />
+                            <span asp-validation-for="Title1" class="text-danger"></span>
                         </div>
 
                         <!-- Short Description Field -->
                         <div class="mb-2">
-                            <label asp-for="ShortDescription" class="form-label">Short Description</label>
-                            <input asp-for="ShortDescription" class="form-control" />
-                            <span asp-validation-for="ShortDescription" class="text-danger"></span>
+                            <label asp-for="ShortDescription1" class="form-label">Short Description</label>
+                            <input asp-for="ShortDescription1" class="form-control" />
+                            <span asp-validation-for="ShortDescription1" class="text-danger"></span>
                         </div>
 
                         <!-- Facebook URL Field -->
                         <div class="mb-2">
-                            <label asp-for="FacebookUrl" class="form-label">Facebook URL</label>
-                            <input asp-for="FacebookUrl" class="form-control" />
-                            <span asp-validation-for="FacebookUrl" class="text-danger"></span>
+                            <label asp-for="FacebookUrl1" class="form-label">Facebook URL</label>
+                            <input asp-for="FacebookUrl1" class="form-control" />
+                            <span asp-validation-for="FacebookUrl1" class="text-danger"></span>
                         </div>
 
                         <!-- Instagram URL Field -->
                         <div class="mb-2">
-                            <label asp-for="InstagramUrl" class="form-label">Instagram URL</label>
-                            <input asp-for="InstagramUrl" class="form-control" />
-                            <span asp-validation-for="InstagramUrl" class="text-danger"></span>
+                            <label asp-for="InstagramUrl1" class="form-label">Instagram URL</label>
+                            <input asp-for="InstagramUrl1" class="form-control" />
+                            <span asp-validation-for="InstagramUrl1" class="text-danger"></span>
                         </div>
                     </div>
 
                     <div class="col-3">
                         <!-- Thumbnail Image Display -->
                         <div class="mb-2">
-                            @if (string.IsNullOrEmpty(Model.ThumbnailUrl))
+                            @if (string.IsNullOrEmpty(Model.ThumbnailUrl1))
                             {
                                 <img src="~/thumbnails/default_image.png" class="img-fluid" id="thumbnail" />
                             }
                             else
                             {
-                                <img src="~/thumbnails/@Model.ThumbnailUrl" class="img-fluid" id="thumbnail" />
+                                <img src="~/thumbnails/@Model.ThumbnailUrl1" class="img-fluid" id="thumbnail" />
                             }
                         </div>
 
                         <!-- Thumbnail File Upload -->
                         <div class="mb-2">
-                            <label asp-for="ThumbnailUrl" class="form-label">Thumbnail</label>
-                            <input asp-for="ThumbnailUrl" type="file" class="form-control" />
-                            <span asp-validation-for="ThumbnailUrl" class="text-danger"></span>
+                            <label asp-for="ThumbnailUrl1" class="form-label">Thumbnail</label>
+                            <input asp-for="ThumbnailUrl1" type="file" class="form-control" />
+                            <span asp-validation-for="ThumbnailUrl1" class="text-danger"></span>
                         </div>
                     </div>
                 </div>
