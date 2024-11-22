@@ -121,7 +121,7 @@ namespace MOProject.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Pages", (string)null);
+                    b.ToTable("Pages");
                 });
 
             modelBuilder.Entity("MOProject.Models.Post", b =>
@@ -160,38 +160,38 @@ namespace MOProject.Migrations
 
                     b.HasIndex("ApplicationUserId");
 
-                    b.ToTable("Posts", (string)null);
+                    b.ToTable("Posts");
                 });
 
-            modelBuilder.Entity("MOProject.Models.Setting1", b =>
+            modelBuilder.Entity("MOProject.Models.Setting", b =>
                 {
-                    b.Property<int>("Id1")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id1"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("FacebookUrl1")
+                    b.Property<string>("FacebookUrl")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("InstagramUrl1")
+                    b.Property<string>("InstagramUrl")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ShortDescription1")
+                    b.Property<string>("ShortDescription")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("SiteName1")
+                    b.Property<string>("SiteName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ThumbnailUrl1")
+                    b.Property<string>("ThumbnailUrl")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Title1")
+                    b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id1");
+                    b.HasKey("Id");
 
-                    b.ToTable("Settings", (string)null);
+                    b.ToTable("Settings");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
