@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MOProject.Data;
-using MOProject.Migrations;
 using MOProject.Models;
 using MOProject.ViewModels;
 
@@ -22,7 +21,7 @@ namespace MOProject.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var settings = await _context.Settingsadd!.ToListAsync();  // Ensure using async method
+            var settings = await _context.SiteSettings!.ToListAsync();
 
             if (settings.Count > 0)
             {
@@ -41,16 +40,16 @@ namespace MOProject.Areas.Admin.Controllers
             }
             else
             {
-                var setting = new Setting()
+                var setting = new SiteSetting()
                 {
-                    SiteName = "Demo Name",      
+                    SiteName = "Demo Name",
                 };
 
                 // Add the new setting to the context and save changes
-                await _context.Settingsadd!.AddAsync(setting);
+                await _context.SiteSettings!.AddAsync(setting);
                 await _context.SaveChangesAsync();
 
-                var createdSettings = await _context.Settingsadd!.ToListAsync();
+                var createdSettings = await _context.SiteSettings!.ToListAsync();
                 var createdVm = new SettingVM
                 {
                     Id = createdSettings[0].Id,
