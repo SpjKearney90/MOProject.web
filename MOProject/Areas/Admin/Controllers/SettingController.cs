@@ -36,19 +36,20 @@ namespace MOProject.Areas.Admin.Controllers // Adjusted to match your project na
             {
                 var vm = new SettingsVM()
                 {
-                    Id = settings[0].Id,
-                    SiteName = settings[0].SiteName,
-                    Title = settings[0].Title,
-                    ShortDescription = settings[0].ShortDescription,
-                    ThumbnailUrl = settings[0].ThumbnailUrl,
-                    FacebookUrl = settings[0].FacebookUrl,
-                   
+                    Id1 = settings[0].Id1,
+                    SiteName1 = settings[0].SiteName1,
+                    Title1 = settings[0].Title1,
+                    ShortDescription1 = settings[0].ShortDescription1,
+                    ThumbnailUrl1 = settings[0].ThumbnailUrl1,
+                    FacebookUrl1 = settings[0].FacebookUrl1,
+                    InstagramUrl1 = settings[0].InstagramUrl1,
+
                 };
                 return View(vm);
             }
 
             // If no settings are found, create a default setting
-            var setting = new Setting()
+            var setting = new Setting1()
             {
                 SiteName = "Demo Name",
             };
@@ -58,13 +59,14 @@ namespace MOProject.Areas.Admin.Controllers // Adjusted to match your project na
             var createdSettings = await _context.Settings!.ToListAsync();
             var createdVm = new SettingsVM()
             {
-                Id = createdSettings[0].Id,
-                SiteName = createdSettings[0].SiteName,
-                Title = createdSettings[0].Title,
-                ShortDescription = createdSettings[0].ShortDescription,
-                ThumbnailUrl = createdSettings[0].ThumbnailUrl,
-                FacebookUrl = createdSettings[0].FacebookUrl,
-              
+                Id1 = createdSettings[0].Id1,
+                SiteName1 = createdSettings[0].SiteName1,
+                Title1 = createdSettings[0].Title1,
+                ShortDescription1 = createdSettings[0].ShortDescription1,
+                ThumbnailUrl1 = createdSettings[0].ThumbnailUrl1,
+                FacebookUrl1 = createdSettings[0].FacebookUrl1,
+                InstagramUrl1 = createdSettings[0].InstagramUrl1,
+
             };
             return View(createdVm);
         }
@@ -76,7 +78,7 @@ namespace MOProject.Areas.Admin.Controllers // Adjusted to match your project na
             if (!ModelState.IsValid) { return View(vm); }
 
             // Retrieve the setting to update
-            var setting = await _context.Settings!.FirstOrDefaultAsync(x => x.Id == vm.Id);
+            var setting = await _context.Settings!.FirstOrDefaultAsync(x => x.Id1 == vm.Id1);
             if (setting == null)
             {
                 
@@ -84,10 +86,10 @@ namespace MOProject.Areas.Admin.Controllers // Adjusted to match your project na
             }
 
             // Update setting properties
-            setting.SiteName = vm.SiteName;
-            setting.Title = vm.Title;
-            setting.ShortDescription = vm.ShortDescription;
-            setting.FacebookUrl = vm.FacebookUrl;
+            setting.SiteName1 = vm.SiteName1;
+            setting.Title1 = vm.Title1;
+            setting.ShortDescription1 = vm.ShortDescription1;
+            setting.FacebookUrl1 = vm.FacebookUrl1;
 
 
             //if (vm.Thumbnail != null)
