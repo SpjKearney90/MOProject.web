@@ -55,7 +55,7 @@
                         </div>
                     </div>
 
-                    @* <div class="col-3">
+                    <div class="col-3">
                         <!-- Thumbnail Image Display -->
                         <div class="mb-2">
                             @if (string.IsNullOrEmpty(Model.ThumbnailUrl))
@@ -70,11 +70,11 @@
 
                         <!-- Thumbnail File Upload -->
                         <div class="mb-2">
-                            <label asp-for="Thumbnail" class="form-label">Thumbnail</label>
-                            <input asp-for="Thumbnail" type="file" class="form-control" />
-                            <span asp-validation-for="Thumbnail" class="text-danger"></span>
+                            <label asp-for="ThumbnailUrl" class="form-label">Thumbnail</label>
+                            <input asp-for="ThumbnailUrl" type="file" class="form-control" />
+                            <span asp-validation-for="ThumbnailUrl" class="text-danger"></span>
                         </div>
-                    </div> *@
+                    </div>
                 </div>
 
                 <!-- Save Button -->
