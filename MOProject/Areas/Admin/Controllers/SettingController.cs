@@ -1,102 +1,108 @@
-﻿using AspNetCoreHero.ToastNotification.Abstractions;
-using MOProject.Data;
-using MOProject.Models;
-using MOProject.ViewModels;
+﻿
+
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
+using MOProject.Data;
+using MOProject.Models;
+using MOProject.ViewModels;
 
-namespace MOProject.Areas.Admin.Controllers
+namespace FineBlog.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Authorize(Roles = "Admin")]
     public class SettingController : Controller
     {
         private readonly ApplicationDbContext _context;
+        
         private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public SettingController(ApplicationDbContext context, IWebHostEnvironment webHostEnvironment)
+        public SettingController(ApplicationDbContext context,
+                                
+                                IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
+            
             _webHostEnvironment = webHostEnvironment;
         }
 
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            // Fetch or create settings
-            var setting = await _context.Settings!.FirstOrDefaultAsync();
-            if (setting == null)
+            var settings = _context.Settings!.ToList();
+            if (settings.Count > 0)
             {
-                setting = new Setting1
+                var vm = new SettingVM()
                 {
-                    SiteName1 = "Demo Name"
+                    Id = settings[0].Id,
+                    SiteName = settings[0].SiteName,
+                    Title = settings[0].Title,
+                    ShortDescription = settings[0].ShortDescription,
+                    ThumbnailUrl = settings[0].ThumbnailUrl,
+                    FacebookUrl = settings[0].FacebookUrl,
+                    InstagramUrl = settings[0].InstagramUrl,
+                   
                 };
-
-                await _context.Settings.AddAsync(setting);
-                await _context.SaveChangesAsync();
+                return View(vm);
             }
-
-            var vm = MapToViewModel(setting);
-            return View(vm);
+            var setting = new Setting()
+            {
+                SiteName = "Demo Name",
+            };
+            await _context.Settings!.AddAsync(setting);
+            await _context.SaveChangesAsync();
+            var createdSettings = _context.Settings!.ToList();
+            var createdVm = new SettingVM()
+            {
+                Id = createdSettings[0].Id,
+                SiteName = createdSettings[0].SiteName,
+                Title = createdSettings[0].Title,
+                ShortDescription = createdSettings[0].ShortDescription,
+                ThumbnailUrl = createdSettings[0].ThumbnailUrl,
+                FacebookUrl = createdSettings[0].FacebookUrl,
+                InstagramUrl = createdSettings[0].InstagramUrl,
+                
+            };
+            return View(createdVm);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Index(Settings1VM vm)
+        public async Task<IActionResult> Index(SettingVM vm)
         {
-            if (!ModelState.IsValid) return View(vm);
-
-            // Find the setting and update its properties
-            var setting = await _context.Settings!.FirstOrDefaultAsync(x => x.Id1 == vm.Id1);
-            if (setting == null) return View(vm);
-
-            UpdateSetting(setting, vm);
-
-            if (vm.Thumbnail1 != null)
+            if (!ModelState.IsValid) { return View(vm); }
+            var setting = await _context.Settings!.FirstOrDefaultAsync(x => x.Id == vm.Id);
+            if (setting == null)
             {
-                setting.ThumbnailUrl1 = UploadImage(vm.Thumbnail1);
+                return View(vm);
             }
+            setting.SiteName = vm.SiteName;
+            setting.Title = vm.Title;
+            setting.ShortDescription = vm.ShortDescription;
+            setting.FacebookUrl = vm.FacebookUrl;
+            setting.InstagramUrl = vm.InstagramUrl;
+            
 
+            if (vm.Thumbnail != null)
+            {
+                setting.ThumbnailUrl = UploadImage(vm.Thumbnail);
+            }
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+           
+            return RedirectToAction("Index", "Setting", new { area = "Admin" });
         }
 
         private string UploadImage(IFormFile file)
         {
-            var uniqueFileName = $"{Guid.NewGuid()}_{file.FileName}";
+            string uniqueFileName = "";
             var folderPath = Path.Combine(_webHostEnvironment.WebRootPath, "thumbnails");
-            Directory.CreateDirectory(folderPath); // Ensure the directory exists
-
+            uniqueFileName = Guid.NewGuid().ToString() + "_" + file.FileName;
             var filePath = Path.Combine(folderPath, uniqueFileName);
-            using (var fileStream = new FileStream(filePath, FileMode.Create))
+            using (FileStream fileStream = System.IO.File.Create(filePath))
             {
                 file.CopyTo(fileStream);
             }
-
             return uniqueFileName;
-        }
-
-        private Settings1VM MapToViewModel(Setting1 setting)
-        {
-            return new Settings1VM
-            {
-                Id1 = setting.Id1,
-                SiteName1 = setting.SiteName1,
-                Title1 = setting.Title1,
-                ShortDescription1 = setting.ShortDescription1,
-                ThumbnailUrl1 = setting.ThumbnailUrl1,
-                FacebookUrl1 = setting.FacebookUrl1,
-                InstagramUrl1 = setting.InstagramUrl1
-            };
-        }
-
-        private void UpdateSetting(Setting1 setting, Settings1VM vm)
-        {
-            setting.SiteName1 = vm.SiteName1;
-            setting.Title1 = vm.Title1;
-            setting.ShortDescription1 = vm.ShortDescription1;
-            setting.FacebookUrl1 = vm.FacebookUrl1;
-            setting.InstagramUrl1 = vm.InstagramUrl1;
         }
     }
 }
