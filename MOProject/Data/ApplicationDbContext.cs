@@ -13,6 +13,6 @@ namespace MOProject.Data
 
         public DbSet<Post>? Posts { get; set; }
         public DbSet<Page>? Pages { get; set; }
-        public DbSet<SiteSettings> SiteSettings { get; set; }
+        public DbSet<Setting>? Settings { get; set; }
     }
 }
