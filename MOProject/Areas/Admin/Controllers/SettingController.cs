@@ -1,6 +1,4 @@
-﻿
-
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
@@ -15,15 +13,15 @@ namespace FineBlog.Areas.Admin.Controllers
     public class SettingController : Controller
     {
         private readonly ApplicationDbContext _context;
-        
+
         private readonly IWebHostEnvironment _webHostEnvironment;
 
         public SettingController(ApplicationDbContext context,
-                                
+
                                 IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
-            
+
             _webHostEnvironment = webHostEnvironment;
         }
 
@@ -42,7 +40,7 @@ namespace FineBlog.Areas.Admin.Controllers
                     ThumbnailUrl = settings[0].ThumbnailUrl,
                     FacebookUrl = settings[0].FacebookUrl,
                     InstagramUrl = settings[0].InstagramUrl,
-                   
+
                 };
                 return View(vm);
             }
@@ -62,7 +60,7 @@ namespace FineBlog.Areas.Admin.Controllers
                 ThumbnailUrl = createdSettings[0].ThumbnailUrl,
                 FacebookUrl = createdSettings[0].FacebookUrl,
                 InstagramUrl = createdSettings[0].InstagramUrl,
-                
+
             };
             return View(createdVm);
         }
@@ -81,14 +79,14 @@ namespace FineBlog.Areas.Admin.Controllers
             setting.ShortDescription = vm.ShortDescription;
             setting.FacebookUrl = vm.FacebookUrl;
             setting.InstagramUrl = vm.InstagramUrl;
-            
+
 
             if (vm.Thumbnail != null)
             {
                 setting.ThumbnailUrl = UploadImage(vm.Thumbnail);
             }
             await _context.SaveChangesAsync();
-           
+
             return RedirectToAction("Index", "Setting", new { area = "Admin" });
         }
 

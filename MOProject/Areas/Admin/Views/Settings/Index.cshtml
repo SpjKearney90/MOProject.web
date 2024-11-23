@@ -2,82 +2,76 @@
 @using MOProject.Models
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
+﻿
+
 @{
-    Layout = "BlogDashLayout";
-    ViewData["Title"] = "Settings";
+    ViewData["Title"] = "Site Setting";
 }
 
 <div class="container-fluid">
-    <a class="btn btn-primary mb-1" asp-action="Index" asp-controller="Post" asp-area="Admin">Go Back</a>
+    <a class="btn btn-primary mb-1" asp-action="Dash" asp-controller="Post">Go Back</a>
     <div class="card">
         <div class="card-header bg-primary">
-            <h4 class="card-title text-white">Settings</h4>
+            <h4 class="card-title text-white">Setting</h4>
         </div>
         <div class="card-body">
-            <form asp-action="Index" asp-controller="Settings" asp-area="Admin" enctype="multipart/form-data">
-                <input type="hidden" asp-for="Id" />
-
+            <form asp-action="Index" asp-controller="Setting" asp-area="Admin" enctype="multipart/form-data">
+                <input type="hidden" asp-for="Id"/>
                 <div class="row mb-2">
                     <div class="col-9">
-                        <!-- SiteName Field -->
                         <div class="mb-2">
-                            <label asp-for="SiteName" class="form-label">Site Name</label>
-                            <input asp-for="SiteName" class="form-control" />
+                            <label>Site Name</label>
+                            <input type="text" asp-for="SiteName" class="form-control" />
                             <span asp-validation-for="SiteName" class="text-danger"></span>
                         </div>
-
-                        <!-- Title Field -->
                         <div class="mb-2">
-                            <label asp-for="Title" class="form-label">Title</label>
-                            <input asp-for="Title" class="form-control" />
+                            <label>Title</label>
+                            <input type="text" asp-for="Title" class="form-control" />
                             <span asp-validation-for="Title" class="text-danger"></span>
                         </div>
 
-                        <!-- Short Description Field -->
                         <div class="mb-2">
-                            <label asp-for="ShortDescription" class="form-label">Short Description</label>
-                            <input asp-for="ShortDescription" class="form-control" />
+                            <label>Short Description</label>
+                            <input type="text" asp-for="ShortDescription" class="form-control" />
                             <span asp-validation-for="ShortDescription" class="text-danger"></span>
                         </div>
 
-                        <!-- Facebook URL Field -->
-                        <div class="mb-2">
-                            <label asp-for="FacebookUrl" class="form-label">Facebook URL</label>
-                            <input asp-for="FacebookUrl" class="form-control" />
+                         <div class="mb-2">
+                            <label>Facebook Url</label>
+                            <input type="text" asp-for="FacebookUrl" class="form-control" />
                             <span asp-validation-for="FacebookUrl" class="text-danger"></span>
                         </div>
-
-                        <!-- Instagram URL Field -->
-                        <div class="mb-2">
-                           <label asp-for="InstagramUrl" class="form-label">Instagram URL</label>
-                            <input asp-for="InstagramUrl" class="form-control" />
+                         <div class="mb-2">
+                            <label>Github Url</label>
+                            <input type="text" asp-for="InstagramUrl" class="form-control" />
                             <span asp-validation-for="InstagramUrl" class="text-danger"></span>
                         </div>
+                       
+                       
                     </div>
-
                     <div class="col-3">
-                        <!-- Thumbnail Image Display -->
                         <div class="mb-2">
-                            @if (string.IsNullOrEmpty(Model.ThumbnailUrl))
-                            {
-                                <img src="~/thumbnails/default_image.png" class="img-fluid" id="thumbnail" />
-                            }
-                            else
-                            {
-                                <img src="~/thumbnails/@Model.ThumbnailUrl" class="img-fluid" id="thumbnail" />
+                            @{
+                                if(Model.ThumbnailUrl == null)
+                                {
+                                    <img src="~/thumbnails/default_image.png" class="img-fluid" id="thumbnail" />
+                                }
+
+                                else
+                                {
+                                    <img src="~/thumbnails/@Model.ThumbnailUrl" class="img-fluid" id="thumbnail" />
+
+                                }
                             }
                         </div>
-
-                        <!-- Thumbnail File Upload -->
                         <div class="mb-2">
-                            <label asp-for="ThumbnailUrl" class="form-label">Thumbnail</label>
-                            <input asp-for="ThumbnailUrl" type="file" class="form-control" />
-                            <span asp-validation-for="ThumbnailUrl" class="text-danger"></span>
+                            <label>Thumbnail</label>
+                            <input type="file" asp-for="Thumbnail" class="custom-file" />
+                            <span asp-validation-for="Thumbnail" class="text-danger"></span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Save Button -->
                 <div class="mb-2">
                     <button type="submit" class="btn btn-primary w-100">Save</button>
                 </div>
@@ -86,14 +80,13 @@
     </div>
 </div>
 
-@section Scripts {
+@section Scripts{
     <partial name="_ValidationScriptsPartial" />
     <script>
-        // Update thumbnail preview when a new file is selected
         $(".custom-file").on("change", function () {
             var fileName = $(this).val().split("\\").pop();
             $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
-            document.getElementById('thumbnail').src = window.URL.createObjectURL(this.files[0]);
+            document.getElementById('thumbnail').src = window.URL.createObjectURL(this.files[0])
         });
     </script>
 }
