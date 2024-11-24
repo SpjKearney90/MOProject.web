@@ -6,7 +6,7 @@ using MOProject.Data;
 using MOProject.Models;
 using MOProject.ViewModels;
 
-namespace FineBlog.Areas.Admin.Controllers
+namespace MOProject.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Authorize(Roles = "Admin")]
