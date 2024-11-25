@@ -1,8 +1,23 @@
-﻿@page
-@model MOProject.Pages.BlogModel
+﻿@model MOProject.ViewModels.HomeVM
+@using X.PagedList
+@using X.PagedList.Mvc.Core
+
+
+
 @{
-    Layout = null;
+    ViewData["Title"] = "Home Page";
+    string thumbnailUrl = "";
+    if (Model.ThumbnailUrl == "")
+    {
+        thumbnailUrl = "/blog/assets/img/home-bg.jpg";
+    }
+    else
+    {
+        thumbnailUrl = "/thumbnails/" + Model.ThumbnailUrl;
+    }
 }
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
