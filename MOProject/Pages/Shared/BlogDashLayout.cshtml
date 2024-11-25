@@ -30,9 +30,10 @@
 
             <hr class="sidebar-divider my-0">
 
-            <li class="nav-item">
-                <a class="nav-link" asp-area="Admin" asp-controller="Settings" asp-action="Index">
-                    <i class="fas fa-fw fa-gear-alt"></i>
+            <!-- Nav Item - Settings -->
+            <li class="nav-item active">
+                <a class="nav-link" href="/Admin/Setting/Index">
+                    <i class="fas fa-fw fa-gear"></i>
                     <span>Settings</span>
                 </a>
             </li>
@@ -55,18 +56,20 @@
                     <div class="topbar-divider d-none d-sm-block"></div>
 
                     <!-- User Dropdown -->
-                    <li class="nav-item dropdown no-arrow">
-                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Logout
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
                             </a>
-                        </div>
-                    </li>
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Logout
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
                 </nav>
 
                 <!-- Main Content -->
@@ -115,10 +118,10 @@
     </div>
 
     <!-- Scripts -->
-    <script src="~/Admin/vendor/bootstrap/js/bootstrap.bundle.js"></script>
-    <script src="~/Admin/vendor/jquery/jquery.js"></script>
-    <script src="~/Admin/vendor/jquery-easing/jquery.easing.js"></script>
-    <script src="~/Admin/js/sb-admin-2.js"></script>
+    <script src="~/Admin/vendor/jquery/jquery.min.js"></script>
+    <script src="~/Admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Admin/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="~/Admin/js/sb-admin-2.min.js"></script>
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
     <script src="https://cdn.tiny.cloud/1/6ga5z4ob4jegyks1dx36pc4r9e32o30y9ovhui4xgp68yvvx/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
@@ -135,4 +138,3 @@
     @RenderSection("scripts", false)
 </body>
 </html>
-

@@ -163,7 +163,7 @@ namespace MOProject.Migrations
                     b.ToTable("Posts");
                 });
 
-            modelBuilder.Entity("MOProject.Models.Settingsadd", b =>
+            modelBuilder.Entity("MOProject.Models.Setting", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -191,7 +191,7 @@ namespace MOProject.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Settingsadd");
+                    b.ToTable("Settings");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

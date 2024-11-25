@@ -7,7 +7,7 @@ using MOProject.Models;
 using MOProject.ViewModels;
 using X.PagedList.Extensions;
 
-namespace FineBlog.Areas.Admin.Controllers
+namespace MOProject.Areas.Admin.Controllers
 {
     [Area("Admin")]
     public class PostController : Controller
