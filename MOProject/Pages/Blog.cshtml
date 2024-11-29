@@ -1,10 +1,19 @@
-﻿@model MOProject.ViewModels.HomeVM
+﻿@page
+@model MOProject.ViewModels.HomeVM
 @using X.PagedList
 @using X.PagedList.Mvc.Core
 
 @{
-    ViewData["Title"] = "Blog";
-    string thumbnailUrl = !string.IsNullOrEmpty(Model.ThumbnailUrl) ? "/thumbnails/" + Model.ThumbnailUrl : "/blog/assets/img/home-bg.jpg";
+    ViewData["Title"] = "Blogs ";
+    string thumbnailUrl = "";
+    if (Model.ThumbnailUrl == "")
+    {
+        thumbnailUrl = "/blog/assets/img/home-bg.jpg";
+    }
+    else
+    {
+        thumbnailUrl = "/thumbnails/" + Model.ThumbnailUrl;
+    }
 }
 
 <!-- Page Header-->
