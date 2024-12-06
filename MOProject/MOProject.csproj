@@ -12,11 +12,9 @@
 
   <ItemGroup>
     <Content Include="Areas\Admin\Controllers\UserController.cs" />
-    <Content Include="Pages\Index.cshtml.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Pages\Index.cshtml" />
     <None Include="Areas\Admin\Views\Post\_ValidationScriptsPartial.cshtml" />
     <None Include="wwwroot\Blogstyles.css" />
   </ItemGroup>
@@ -38,6 +36,7 @@
     <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
     <PackageReference Include="Serilog.Sinks.File" Version="6.0.0" />
     <PackageReference Include="X.PagedList" Version="10.5.7" />
+    <PackageReference Include="X.PagedList.Mvc.Bootstrap4" Version="10.1.2" />
     <PackageReference Include="X.PagedList.Mvc.Core" Version="10.5.7" />
   </ItemGroup>
 

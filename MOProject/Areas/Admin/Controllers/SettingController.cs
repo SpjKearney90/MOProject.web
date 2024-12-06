@@ -84,7 +84,7 @@ namespace MOProject.Areas.Admin.Controllers
             }
 
             await _context.SaveChangesAsync();
-            return RedirectToAction("Index", "Setting", new { area = "Admin" });
+            return Redirect("Blog");
         }
 
         // Helper method to upload an image
