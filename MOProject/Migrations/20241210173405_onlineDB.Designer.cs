@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MOProject.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241129163319_fixeddb")]
-    partial class fixeddb
+    [Migration("20241210173405_onlineDB")]
+    partial class onlineDB
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

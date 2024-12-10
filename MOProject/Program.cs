@@ -49,7 +49,6 @@ else
 
 // Middlewares
 app.UseHttpsRedirection();
-app.UseDefaultFiles();
 app.UseStaticFiles();
 
 app.UseRouting();
@@ -57,13 +56,14 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
+// Define routes
 app.MapRazorPages();
 app.MapControllerRoute(
     name: "area",
     pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Home}/{action=Home}/{id?}"); // Default to "Home" action
 
 app.Run();
 
