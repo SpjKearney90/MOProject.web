@@ -11,3 +11,5 @@ namespace MOProject.ViewModels
         public IPagedList<Post>? Posts { get; set; }
     }
 }
+
+
