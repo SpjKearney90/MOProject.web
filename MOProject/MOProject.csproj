@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <None Include="Areas\Admin\Views\Post\_ValidationScriptsPartial.cshtml" />
+    <None Include="Views\Blog\Post.cshtml" />
     <None Include="wwwroot\Blogstyles.css" />
   </ItemGroup>
 
