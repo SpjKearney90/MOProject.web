@@ -26,6 +26,7 @@ namespace MOProject.Areas.admin.Controllers
         }
 
         [HttpGet]
+        [Area("Admin")]
         public async Task<IActionResult> Index()
         {
             var settings = _context.Settings!.ToList();

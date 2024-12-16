@@ -1,9 +1,7 @@
 ﻿@page
 @model MOProject.ViewModels.HomeVM
-
-<p>Hello Hello </p>
-
-@* @using X.PagedList
+@using Microsoft.AspNetCore.Mvc.RazorPages;
+@using X.PagedList
 @using X.PagedList.Mvc.Core
 
 @{
@@ -53,7 +51,8 @@
             {
                 <!-- Post preview-->
                 <div class="post-preview">
-                    <a asp-controller="Blog" asp-action="Post" asp-route-slug="@post.Slug">
+                    
+                    <a asp-controller="Blog" asp-action="Index" asp-route-slug="@post.Slug">
                         <h2 class="post-title">@post.Title</h2>
                         <h3 class="post-subtitle">@post.ShortDescription</h3>
                     </a>
@@ -83,5 +82,5 @@
             })
         </div>
     </div>
-</div> *@
+</div>
 
