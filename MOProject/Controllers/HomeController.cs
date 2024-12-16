@@ -20,7 +20,7 @@ namespace MOProject.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Blog(int? page)
+        public async Task<IActionResult> Index(int? page)
         {
             var vm = new HomeVM();
 
@@ -53,7 +53,12 @@ namespace MOProject.Controllers
             vm.Posts = new StaticPagedList<Post>(posts, pageNumber, pageSize, totalCount);
 
             // Return the view with the model containing the posts and other data
-            return View("Pages/Blog", vm); // Use the correct path or adjust accordingly
+            return View("Views/Blog", vm); // Use the correct path or adjust accordingly
+
+            
+
+
+
         }
 
 

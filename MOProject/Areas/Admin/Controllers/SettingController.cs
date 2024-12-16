@@ -88,7 +88,7 @@ namespace MOProject.Areas.admin.Controllers
             }
             await _context.SaveChangesAsync();
 
-            return RedirectToAction("Index", "Setting", new { area = "Admin" });
+            return RedirectToAction("Dash", "User", new { area = "Admin" });
         }
 
         private string UploadImage(IFormFile file)
