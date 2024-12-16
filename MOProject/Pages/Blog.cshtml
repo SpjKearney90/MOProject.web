@@ -2,8 +2,8 @@
 @model MOProject.Pages.BlogModel
 @using X.PagedList.Mvc.Core
 @{
-    Layout = null;
-    string thumbnailUrl = Model.HomeVM.ThumbnailUrl == null || Model.HomeVM.ThumbnailUrl == "" ? "/blog/assets/img/home-bg.jpg" : "/thumbnails/" + Model.HomeVM.ThumbnailUrl;
+    
+    string thumbnailUrl = Model.HomeVM.ThumbnailUrl == null || Model.HomeVM.ThumbnailUrl == "" ? "~Admin/ThumbNail/Thumbnail" : "/thumbnails/" + Model.HomeVM.ThumbnailUrl;
 }
 
 <!DOCTYPE html>
