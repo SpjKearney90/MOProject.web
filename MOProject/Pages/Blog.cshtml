@@ -2,7 +2,7 @@
 @model MOProject.Pages.BlogModel
 @using X.PagedList.Mvc.Core
 @{
-    
+    // Layout = null;
     string thumbnailUrl = Model.HomeVM.ThumbnailUrl == null || Model.HomeVM.ThumbnailUrl == "" ? "~Admin/ThumbNail/Thumbnail" : "/thumbnails/" + Model.HomeVM.ThumbnailUrl;
 }
 
@@ -12,7 +12,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@Model.HomeVM.Title</title>
-    <link rel="stylesheet" href="~/css/site.css">
+    <link rel="stylesheet" href="./Blogstyles.css">
 </head>
 <body>
     <!-- Page Header -->
