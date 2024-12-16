@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Remove="Areas\Admin\Views\Shared\_ValidateScriptsPartial.cshtml" />
+    <Content Remove="Pages\Shared\_ValidateScriptsPartial.cshtml" />
   </ItemGroup>
 
   <ItemGroup>

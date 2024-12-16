@@ -1,6 +1,7 @@
 ﻿
 @model MOProject.ViewModels.SettingVM
-
+@using MOProject.Models
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 @{
     Layout = "BlogDashLayout";
@@ -11,33 +12,36 @@
     <a class="btn btn-primary mb-1" asp-action="Index" asp-controller="Post">Go Back</a>
     <div class="card">
         <div class="card-header bg-primary">
-            <h4 class="card-title text-white">Setting</h4>
+            <h4 class="card-title text-white">Settings</h4>
         </div>
         <div class="card-body">
-            <form asp-action="Index" asp-controller="Setting" asp-area="Admin" enctype="multipart/form-data">
-                <input type="hidden" asp-for="Id"/>
+            <form asp-action="Index" asp-controller="Setting" asp-area="Admin" method="post" enctype="multipart/form-data">
+                <input type="hidden" asp-for="Id" />
+
                 <div class="row mb-2">
-                    <div class="col-9">
-                        <div class="mb-2">
-                            <label>Site Name</label>
+                    <!-- Left Column -->
+                    <div class="col-lg-9">
+                        <div class="mb-3">
+                            <label asp-for="SiteName" class="form-label">Site Name</label>
                             <input type="text" asp-for="SiteName" class="form-control" />
                             <span asp-validation-for="SiteName" class="text-danger"></span>
                         </div>
-                        <div class="mb-2">
-                            <label>Title</label>
-                            <input type="text" asp-for="Title" class="form-control" />
+
+                        <div class="mb-3">
+                            <label asp-for="Title" class="form-label">Title</label>
+                            <input asp-for="Title" class="form-control" />
                             <span asp-validation-for="Title" class="text-danger"></span>
                         </div>
 
-                        <div class="mb-2">
-                            <label>Short Description</label>
-                            <input type="text" asp-for="ShortDescription" class="form-control" />
+                        <div class="mb-3">
+                            <label asp-for="ShortDescription" class="form-label">Short Description</label>
+                            <input asp-for="ShortDescription" class="form-control" />
                             <span asp-validation-for="ShortDescription" class="text-danger"></span>
                         </div>
 
-                         <div class="mb-2">
-                            <label>Facebook Url</label>
-                            <input type="text" asp-for="FacebookUrl" class="form-control" />
+                        <div class="mb-3">
+                            <label asp-for="FacebookUrl" class="form-label">Facebook URL</label>
+                            <input asp-for="FacebookUrl" class="form-control" />
                             <span asp-validation-for="FacebookUrl" class="text-danger"></span>
                         </div>
                         <div class="mb-2">
@@ -45,32 +49,24 @@
                             <input type="text" asp-for="InstagramUrl" class="form-control" />
                             <span asp-validation-for="InstagramUrl" class="text-danger"></span>
                         </div>
-                       
                     </div>
-                    <div class="col-3">
-                        <div class="mb-2">
-                            @{
-                                if(Model.ThumbnailUrl == null)
-                                {
-                                    <img src="~/thumbnails/Thumbnail.png" class="img-fluid" id="thumbnail" />
-                                }
 
-                                else
-                                {
-                                    <img src="~/thumbnails/@Model.ThumbnailUrl" class="img-fluid" id="thumbnail" />
-
-                                }
-                            }
+                    <!-- Right Column -->
+                    <div class="col-lg-3">
+                        <div class="mb-3 text-center">
+                            <img src="@Url.Content(Model.ThumbnailUrl ?? "~/thumbnails/Thumbnail.png")"
+                                 class="img-fluid rounded border" id="thumbnail" alt="Thumbnail" />
                         </div>
-                        <div class="mb-2">
-                            <label>Thumbnail</label>
-                            <input type="file" asp-for="Thumbnail" class="custom-file" />
+
+                        <div class="mb-3">
+                            <label asp-for="Thumbnail" class="form-label">Thumbnail</label>
+                            <input type="file" asp-for="Thumbnail" class="form-control" />
                             <span asp-validation-for="Thumbnail" class="text-danger"></span>
                         </div>
                     </div>
                 </div>
 
-                <div class="mb-2">
+                <div class="mb-3">
                     <button type="submit" class="btn btn-primary w-100">Save</button>
                 </div>
             </form>
@@ -78,13 +74,13 @@
     </div>
 </div>
 
-@section Scripts{
+@section Scripts {
     <partial name="_ValidationScriptsPartial" />
     <script>
         $(".custom-file").on("change", function () {
             var fileName = $(this).val().split("\\").pop();
             $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
-            document.getElementById('thumbnail').src = window.URL.createObjectURL(this.files[0])
-        });
+            document.getElementById('thumbnail').src = window.URL.createObjectURL(this.files[0]);
+                });
     </script>
 }

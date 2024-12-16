@@ -48,6 +48,8 @@ else
 }
 
 // Middlewares
+app.UseDeveloperExceptionPage();
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
