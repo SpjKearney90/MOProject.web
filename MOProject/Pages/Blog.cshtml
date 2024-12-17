@@ -2,7 +2,9 @@
 @model MOProject.Pages.BlogModel
 @using X.PagedList.Mvc.Core
 @{
-    // Fallback for ThumbnailUrl
+
+
+
     string thumbnailUrl = string.IsNullOrWhiteSpace(Model.HomeVM?.ThumbnailUrl)
         ? "~/Admin/ThumbNail/Thumbnail"
         : "/thumbnails/" + Model.HomeVM.ThumbnailUrl;
