@@ -18,6 +18,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include="Views\Blog\Post.cshtml.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="Areas\Admin\Controllers\UserController.cs" />
   </ItemGroup>
 
