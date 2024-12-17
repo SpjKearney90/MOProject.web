@@ -7,18 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Views\**" />
-    <Content Remove="Views\**" />
-    <EmbeddedResource Remove="Views\**" />
-    <None Remove="Views\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Content Remove="Pages\Shared\_ValidateScriptsPartial.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Include="Views\Blog\Post.cshtml.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -27,7 +16,7 @@
 
   <ItemGroup>
     <None Include="Areas\Admin\Views\Post\_ValidationScriptsPartial.cshtml" />
-    <None Include="Views\Blog\Post.cshtml" />
+    <None Include="Pages\Post.cshtml" />
     <None Include="wwwroot\Blogstyles.css" />
   </ItemGroup>
 

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using MOProject.Data;
 using MOProject.ViewModels;
 
-namespace MOProject.Views.Blog
+namespace MOProject.Pages
 {
     public class BlogController : Controller
     {
