@@ -9,6 +9,10 @@ namespace MOProject.ViewModels
         public string? ShortDescription { get; set; }
         public string? ThumbnailUrl { get; set; }
         public IPagedList<Post>? Posts { get; set; }
+
+        public int TotalPages { get; set; }
+        public int CurrentPage { get; set; }
+
     }
 }
 

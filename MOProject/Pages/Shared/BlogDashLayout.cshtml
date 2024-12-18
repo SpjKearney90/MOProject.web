@@ -39,7 +39,7 @@
             </li>
 
             <hr class="sidebar-divider d-none d-md-block">
-            <div class="text-center d-none d-md-inline">
+            <div class="d-none d-md-inline text-center">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
             </div>
         </ul>
@@ -48,7 +48,7 @@
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
                 <!-- Topbar -->
-                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                <nav class="navbar navbar-expand navbar-light topbar static-top mb-4 bg-white shadow">
                     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                         <i class="fa fa-bars"></i>
                     </button>
@@ -59,9 +59,9 @@
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
+                                <span class="d-none d-lg-inline small mr-2 text-gray-600">Douglas McGee</span>
                             </a>
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                            <div class="dropdown-menu dropdown-menu-right animated--grow-in shadow" aria-labelledby="userDropdown">
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -84,7 +84,7 @@
                 <!-- Footer -->
                 <footer class="sticky-footer bg-white">
                     <div class="container my-auto">
-                        <div class="copyright text-center my-auto">
+                        <div class="copyright my-auto text-center">
                             <span>Copyright &copy; Wreaths By Margaret Maloney 2024</span>
                         </div>
                     </div>
@@ -125,15 +125,65 @@
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
     <script src="https://cdn.tiny.cloud/1/6ga5z4ob4jegyks1dx36pc4r9e32o30y9ovhui4xgp68yvvx/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
-    <script>
-        tinymce.init({
-            selector: 'textarea[name="Description"]',
-            height: 300,
-            plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
-            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
-            menubar: false
-        });
-    </script>
+<script>
+  tinymce.init({
+      selector: 'textarea[name="Description"]',
+      height: 300,
+      plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
+      toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
+      menubar: false,
+      images_upload_url: '/upload-image',
+      automatic_uploads: true,
+      file_picker_types: 'image',
+      file_picker_callback: function (callback, value, meta) {
+          if (meta.filetype === 'image') {
+              const input = document.createElement('input');
+              input.setAttribute('type', 'file');
+              input.setAttribute('accept', 'image/*');
+
+              input.onchange = function () {
+                  const file = this.files[0];
+                  const reader = new FileReader();
+
+                  reader.onload = function () {
+                      const id = 'blobid' + new Date().getTime();
+                      const blobCache = tinymce.activeEditor.editorUpload.blobCache;
+                      const base64 = reader.result.split(',')[1];
+                      const blobInfo = blobCache.create(id, file, base64);
+                      blobCache.add(blobInfo);
+
+                      // Add the responsive class to the image
+                      callback(blobInfo.blobUri(), { title: file.name, class: 'responsive-img' });
+                  };
+
+                  reader.readAsDataURL(file);
+              };
+
+              input.click();
+          }
+      },
+      image_class_list: [
+          { title: 'None', value: '' },
+          { title: 'Responsive', value: 'responsive-img' }
+      ]
+  });
+</script>
+<style>
+  /* Make all images responsive */
+  img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+  }
+
+  /* Optionally, add a custom class for more control */
+  .responsive-img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+  }
+</style>
+
 
     @RenderSection("scripts", false)
 </body>

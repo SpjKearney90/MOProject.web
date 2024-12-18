@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace MOProject.Views
+namespace MOProject.Pages.Shared
 {
-    public class _ViewStartModel : PageModel
+    public class PostLayoutModel : PageModel
     {
         public void OnGet()
         {

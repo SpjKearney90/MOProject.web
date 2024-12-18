@@ -12,5 +12,8 @@
 
         public string? Description { get; set; }
 
+        public string? NextPostSlug { get; set; }
+
+
     }
 }
