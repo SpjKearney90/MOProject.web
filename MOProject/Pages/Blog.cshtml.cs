@@ -34,7 +34,7 @@ namespace MOProject.Pages
             }
 
             // Pagination setup
-            int pageSize = 4;  // Number of posts per page
+            int pageSize = 5;  // Number of posts per page
             int pageNumber = page ?? 1;  // Default to page 1 if not provided
 
             // Query posts and apply pagination
@@ -51,6 +51,10 @@ namespace MOProject.Pages
             // Get the total count for pagination
             var totalCount = await postsQuery.CountAsync();
             HomeVM.Posts = new StaticPagedList<Post>(posts, pageNumber, pageSize, totalCount);
+
+            // Calculate total pages and add to HomeVM
+            HomeVM.TotalPages = (int)Math.Ceiling((double)totalCount / pageSize);
+            HomeVM.CurrentPage = pageNumber;
         }
     }
 }

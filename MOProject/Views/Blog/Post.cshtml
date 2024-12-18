@@ -1,9 +1,9 @@
-﻿
-@model MOProject.ViewModels.BlogPostVM
+﻿@model MOProject.ViewModels.BlogPostVM
 @{
-    ViewData["Title"] = "Post";
+    Layout = "PostLayout";
+   
     string thumbnailUrl = "";
-    if(Model.ThumbnailUrl == null)
+    if (Model.ThumbnailUrl == null)
     {
         thumbnailUrl = "/blog/assets/img/home-bg.jpg";
     }

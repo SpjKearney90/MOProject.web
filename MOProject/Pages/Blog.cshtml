@@ -2,9 +2,6 @@
 @model MOProject.Pages.BlogModel
 @using X.PagedList.Mvc.Core
 @{
-
-
-
     string thumbnailUrl = string.IsNullOrWhiteSpace(Model.HomeVM?.ThumbnailUrl)
         ? "~/Admin/ThumbNail/Thumbnail"
         : "/thumbnails/" + Model.HomeVM.ThumbnailUrl;
@@ -66,13 +63,14 @@
                 <div class="pagination">
                     @if (Model.HomeVM?.Posts?.HasPreviousPage == true)
                     {
-                        <a href="@Url.Page("Blog", new { page = Model.HomeVM.Posts.PageNumber - 1 })" class="btn btn-primary mx-1">Previous</a>
+                        <a href="@Url.Action("Blog", new { page = Model.HomeVM.Posts.PageNumber - 1 })" class="btn btn-primary mx-1">Previous</a>
                     }
                     @if (Model.HomeVM?.Posts?.HasNextPage == true)
                     {
-                        <a href="@Url.Page("Blog", new { page = Model.HomeVM.Posts.PageNumber + 1 })" class="btn btn-primary mx-1">Next</a>
+                        <a href="@Url.Action("Blog", new { page = Model.HomeVM.Posts.PageNumber + 1 })" class="btn btn-primary mx-1">Next</a>
                     }
                 </div>
+
             </div>
         </div>
     </div>
