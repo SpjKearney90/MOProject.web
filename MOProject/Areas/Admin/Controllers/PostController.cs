@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using MOProject.Data;
 using MOProject.Models;
 using MOProject.ViewModels;
+using X.PagedList;
 using X.PagedList.Extensions;
 
 namespace MOProject.Areas.Admin.Controllers
@@ -29,7 +30,16 @@ namespace MOProject.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Dash(int? page)
         {
-            var listOfPosts = await _context.Posts!.Include(x => x.ApplicationUser).ToListAsync();
+            int pageSize = 5;
+            int pageNumber = page ?? 1;
+
+            // Fetch the posts from the database
+            var listOfPosts = await _context.Posts!
+                .Include(x => x.ApplicationUser)
+                .OrderByDescending(x => x.CreatedDate)
+                .ToListAsync();
+
+            // Map to ViewModel
             var listOfPostsVM = listOfPosts.Select(x => new PostVM
             {
                 Id = x.Id,
@@ -39,11 +49,12 @@ namespace MOProject.Areas.Admin.Controllers
                 AuthorName = x.ApplicationUser!.FirstName + " " + x.ApplicationUser.LastName
             }).ToList();
 
-            int pageSize = 5;
-            int pageNumber = page ?? 1;
+            // Use PagedList to paginate the ViewModel
+            var pagedPosts = new PagedList<PostVM>(listOfPostsVM, pageNumber, pageSize);
 
-            return View(listOfPostsVM.OrderByDescending(x => x.CreatedDate).ToPagedList(pageNumber, pageSize));
+            return View(pagedPosts);
         }
+
 
         [HttpGet]
         public IActionResult Create()
