@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using MOProject.Areas.Identity.Data;
 using MOProject.Data;
 using MOProject.Models;
 using MOProject.Services;
@@ -15,28 +16,33 @@ Log.Logger = new LoggerConfiguration()
     .WriteTo.File("logs/myapp-.log", rollingInterval: RollingInterval.Day)
     .CreateLogger();
 
-// Use Serilog as the logging provider
 builder.Host.UseSerilog();
 builder.Logging.ClearProviders();
 builder.Logging.AddSerilog();
 
-// Add services to the container
-builder.Services.AddRazorPages();
-builder.Services.AddControllersWithViews();
+// Register DbContext
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// Register Identity services
+builder.Services.AddDefaultIdentity<RPProjectUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddEntityFrameworkStores<ApplicationDbContext>();
+
+// Register additional services
+builder.Services.AddScoped<IDbInitializer, DbInitializer>(); // Replace with your actual implementation
+builder.Services.AddScoped<UserManager<RPProjectUser>>();
+builder.Services.AddScoped<SignInManager<RPProjectUser>>();
 builder.Services.AddTransient<IEmailService, DevTimeEmailService>();
 
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
-builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
-    .AddEntityFrameworkStores<ApplicationDbContext>()
-    .AddDefaultTokenProviders();
-builder.Services.AddScoped<IDbInitializer, DbInitializer>();
+builder.Services.AddRazorPages();
+builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
-// Data seeding
-DataSeeding(app);
+// Seed initial data
+SeedData(app);
 
+// Configure middleware
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
@@ -47,9 +53,6 @@ else
     app.UseHsts();
 }
 
-// Middlewares
-app.UseDeveloperExceptionPage();
-
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
@@ -58,18 +61,21 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-// Define routes
+// Define routing
 app.MapRazorPages();
+
 app.MapControllerRoute(
     name: "area",
     pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Home}/{id?}"); // Default to "Home" action
+    pattern: "{controller=Home}/{action=Index}/{id?}"); // Correct default action
 
 app.Run();
 
-void DataSeeding(WebApplication app)
+// Data seeding method
+void SeedData(WebApplication app)
 {
     using (var scope = app.Services.CreateScope())
     {
