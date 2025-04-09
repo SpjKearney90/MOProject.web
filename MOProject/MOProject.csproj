@@ -18,10 +18,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Areas\Admin\Controllers\UserController.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="Areas\Admin\Views\Post\_ValidationScriptsPartial.cshtml" />
     <None Include="Views\Blog\Post.cshtml" />
     <None Include="wwwroot\Blogstyles.css" />
