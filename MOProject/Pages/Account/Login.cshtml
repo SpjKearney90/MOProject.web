@@ -3,168 +3,53 @@
 
 @{
     Layout = "/Pages/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Login";
 }
 
-<div class="row justify-content-center">
-    <div class="col-6 mt-5">
-        <div class="card login-logout-card">
-            <div class="card-header">
-                <ul class="nav nav-tabs card-header-tabs">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/Pages/Account/Login">
-                            Login
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/Pages/Account/Register">
-                            Register
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            <div class="card-body">
-                <div class="row justify-content-center">
-                    <div class="col-10 my-4">
-                        <!-- Login Form -->
-                        <section>
-                            <form id="account" method="post">
-                               @*  <h2>Use a local account to log in.</h2> *@
-                                <hr />
-                                <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
-                                <div class="form-floating mb-3">
-                                    <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
-                                    <label asp-for="Input.Email" class="form-label">Email</label>
-                                    <span asp-validation-for="Input.Email" class="text-danger"></span>
-                                </div>
-                                <div class="form-floating mb-3">
-                                    <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="password" />
-                                    <label asp-for="Input.Password" class="form-label">Password</label>
-                                    <span asp-validation-for="Input.Password" class="text-danger"></span>
-                                </div>
-                                <div class="checkbox mb-3">
-                                    <label asp-for="Input.RememberMe" class="form-label">
-                                        <input class="form-check-input" asp-for="Input.RememberMe" />
-                                        @Html.DisplayNameFor(m => m.Input.RememberMe)
-                                    </label>
-                                </div>
-                                <div>
-                                    <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Log in</button>
-                                </div>
-                                <div>
-                                    <p>
-                                        <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
-                                    </p>
-                                    <p>
-                                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
-                                    </p>
-                                    <p>
-                                        <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Resend email confirmation</a>
-                                    </p>
-                                </div>
-                            </form>
-                        </section>
-                        <!-- /Login Form -->
-                    </div>
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <div class="card rounded-4 border-0 shadow-sm">
+                <div class="card-header bg-primary rounded-top-4 text-center text-white">
+                    <h4 class="mb-0">Welcome Back</h4>
+                </div>
+                <div class="card-body p-4">
+                    <form id="account" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3" role="alert"></div>
+
+                        <div class="form-floating mb-3">
+                            <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+                            <label asp-for="Input.Email">Email</label>
+                            <span asp-validation-for="Input.Email" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="Password" />
+                            <label asp-for="Input.Password">Password</label>
+                            <span asp-validation-for="Input.Password" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" asp-for="Input.RememberMe" />
+                            <label class="form-check-label" asp-for="Input.RememberMe">
+                                @Html.DisplayNameFor(m => m.Input.RememberMe)
+                            </label>
+                        </div>
+
+                        <button id="login-submit" type="submit" class="btn btn-primary w-100 mb-3">Log in</button>
+
+                        <div class="text-center">
+                            <a class="d-block mb-1" id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
+                            <a class="d-block mb-1" asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
+                            <a class="d-block" id="resend-confirmation" asp-page="./ResendEmailConfirmation">Resend email confirmation</a>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-    
-        <section>
-            
-            
-            @{
-                if ((Model.ExternalLogins?.Count ?? 0) == 0)
-                {
-                    <div>
-                        
-                            <div class="t-infoContainer t-infoContainer--infoPagesPadding">
-                                <div class="o-infoSection">
-                                    <div class="m-secondaryTitleBox m-secondaryTitleBox--noMarginBottom u-margin-top-24">
-                                       <h2>Adding another Reliant party ? </h2>
-                                    </div>
-
-                                    <div class="m-logoLinkSection">
-                                        <a href="https://www.mywelfare.ie/" id="pageLogoLink-MyWelfare" class="a-logoLink" target="_blank" data-googletaglabel="Go To MyWelfare" rel="noopener noreferrer">
-                                            <img id="pageLogoLink-MyWelfare-img" src="https://mygovidstatic.blob.core.windows.net/assets/images/partner_logos_mywelfare_colour.svg" alt="MyWelfare Logo" class="a-logoImage" data-googletaglabel="Go To MyWelfare">
-                                        </a>
-                                        <a href="https://www.ros.ie/myaccount-web/sign_in.html" id="pageLogoLink-Revenue" class="a-logoLink" target="_blank" data-googletaglabel="Go To Revenue" rel="noopener noreferrer">
-                                            <img id="pageLogoLink-Revenue-img" src="https://mygovidstatic.blob.core.windows.net/assets/images/partner_logos_revenue_colour.svg" alt="Revenue Logo" class="a-logoImage" data-googletaglabel="Go To Revenue">
-                                        </a>
-                                        <a href="https://ndls.rsa.ie/" id="pageLogoLink-NDLS" class="a-logoLink" target="_blank" data-googletaglabel="Go To Ndls" rel="noopener noreferrer">
-                                            <img id="pageLogoLink-NDLS-img" src="https://mygovidstatic.blob.core.windows.net/assets/images/partner_logos_ndls_colour.svg" alt="NDLS Logo" class="a-logoImage" data-googletaglabel="Go To Ndls">
-                                        </a>
-                                        <a href="https://ncs.gov.ie" id="pageLogoLink-National Childcare Scheme" class="a-logoLink" target="_blank" data-googletaglabel="Go To Ncs" rel="noopener noreferrer">
-                                            <img id="pageLogoLink-National Childcare Scheme-img" src="https://mygovidstatic.blob.core.windows.net/assets/images/partner_logos_ncs_colour.svg" alt="National Childcare Scheme Logo" class="a-logoImage" data-googletaglabel="Go To Ncs">
-                                        </a>
-                                        <a href="https://myroadsafety.rsa.ie/" id="pageLogoLink-RSA" class="a-logoLink" target="_blank" data-googletaglabel="Go To Rsa" rel="noopener noreferrer">
-                                            <img id="pageLogoLink-RSA-img" src="https://mygovidstatic.blob.core.windows.net/assets/images/partner_logos_rsa_colour.svg" alt="RSA Logo" class="a-logoImage" data-googletaglabel="Go To Rsa">
-                                        </a>
-                                        <a href="https://susi.ie/" id="pageLogoLink-SUSI" class="a-logoLink" target="_blank" data-googletaglabel="Go To Susi" rel="noopener noreferrer">
-                                            <img id="pageLogoLink-SUSI-img" src="https://mygovidstatic.blob.core.windows.net/assets/images/partner_logos_susi_colour.svg" alt="SUSI Logo" class="a-logoImage" data-googletaglabel="Go To Susi">
-                                        </a>
-                                        <a href="https://jobsireland.ie/en-US/loginorregister" id="pageLogoLink-Jobs Ireland" class="a-logoLink" target="_blank" data-googletaglabel="Go To JobsIreland" rel="noopener noreferrer">
-                                            <img id="pageLogoLink-Jobs Ireland-img" src="https://mygovidstatic.blob.core.windows.net/assets/images/partner_logos_jobsireland_colour.svg" alt="Jobs Ireland Logo" class="a-logoImage" data-googletaglabel="Go To JobsIreland">
-                                        </a>
-                                        <a href="https://www.voter.ie" id="pageLogoLink-Voter.ie" class="a-logoLink" target="_blank" data-googletaglabel="Go To Dcc" rel="noopener noreferrer">
-                                            <img id="pageLogoLink-Voter.ie-img" src="https://mygovidstatic.blob.core.windows.net/assets/images/partner_logos_dcc_colour.svg" alt="Voter.ie Logo" class="a-logoImage" data-googletaglabel="Go To Dcc">
-                                        </a>
-                                        <a href="https://digitalpostbox.ie/" id="pageLogoLink-Digital PostBox" class="a-logoLink" target="_blank" data-googletaglabel="Go To DigitalPostBox" rel="noopener noreferrer">
-                                            <img id="pageLogoLink-Digital PostBox-img" src="https://mygovidstatic.blob.core.windows.net/assets/images/partner_logos_digitalpostbox_colour.svg" alt="Digital PostBox Logo" class="a-logoImage" data-googletaglabel="Go To DigitalPostBox">
-                                        </a>
-                                        <a href="https://agfood.agriculture.gov.ie/sso-auth-ui-applicant/#/login" id="pageLogoLink-AgFood" class="a-logoLink" target="_blank" data-googletaglabel="Go To DptOfAgricultureFoodAndTheMarine" rel="noopener noreferrer">
-                                            <img id="pageLogoLink-AgFood-img" src="https://mygovidstatic.blob.core.windows.net/assets/images/partner_logos_agriculture_colour.svg" alt="AgFood Logo" class="a-logoImage" data-googletaglabel="Go To DptOfAgricultureFoodAndTheMarine">
-                                        </a>
-                                        <a href="https://www.dfa.ie/passports/" id="pageLogoLink-Dpt. Of Foreign Affairs" class="a-logoLink" target="_blank" data-googletaglabel="Go To DptofForeignAffairs" rel="noopener noreferrer">
-                                            <img id="pageLogoLink-Dpt. Of Foreign Affairs-img" src="https://mygovidstatic.blob.core.windows.net/assets/images/partner_logos_foreignaffairs_colour.svg" alt="Dpt. Of Foreign Affairs Logo" class="a-logoImage" data-googletaglabel="Go To DptofForeignAffairs">
-                                        </a>
-                                        <a href="https://portal.decisionsupportservice.ie/SignIn" id="pageLogoLink-Decision Support Service" class="a-logoLink" target="_blank" data-googletaglabel="Go To Dss" rel="noopener noreferrer">
-                                            <img id="pageLogoLink-Decision Support Service-img" src="https://mygovidstatic.blob.core.windows.net/assets/images/partner_logos_mhc_colour.svg" alt="Decision Support Service Logo" class="a-logoImage" data-googletaglabel="Go To Dss">
-                                        </a>
-                                        <a href="https://hap.ie/" id="pageLogoLink-HAP Online" class="a-logoLink" target="_blank" data-googletaglabel="Go To HAP Online" rel="noopener noreferrer">
-                                            <img id="pageLogoLink-HAP Online-img" src="https://mygovidstatic.blob.core.windows.net/assets/images/partner_logos_LCCo_colour.svg" alt="HAP Online Logo" class="a-logoImage" data-googletaglabel="Go To HAP Online">
-                                        </a>
-                                        <a href="https://mycoco.ie/" id="pageLogoLink-MyCoCo" class="a-logoLink" target="_blank" data-googletaglabel="Go To MyCoCo" rel="noopener noreferrer">
-                                            <img id="pageLogoLink-MyCoCo-img" src="https://mygovidstatic.blob.core.windows.net/assets/images/partner_logos_MyCoCo_colour.svg" alt="MyCoCo Logo" class="a-logoImage" data-googletaglabel="Go To MyCoCo">
-                                        </a>
-                                        <a href="https://portal.heritage.gov.ie/" id="pageLogoLink-The Department of Housing" class="a-logoLink" target="_blank" data-googletaglabel="Go To The Department of Housing" rel="noopener noreferrer">
-                                            <img id="pageLogoLink-The Department of Housing-img" src="https://mygovidstatic.blob.core.windows.net/assets/images/partner_logos_DoH_colour.svg" alt="The Department of Housing Logo" class="a-logoImage" data-googletaglabel="Go To The Department of Housing">
-                                        </a>
-                                        <a href="https://www.vehicleservices.gov.ie/cvo/buyer/home" id="pageLogoLink-Department of Transport" class="a-logoLink" target="_blank" data-googletaglabel="Go To The Department of Transport" rel="noopener noreferrer">
-                                            <img id="pageLogoLink-Department of Transport-img" src="https://mygovidstatic.blob.core.windows.net/assets/images/partner_logos_DoT_colour.svg" alt="Department of Transport Logo" class="a-logoImage" data-googletaglabel="Go To The Department of Transport">
-                                        </a>
-
-                                    </div>
-
-                                    <div class="showallservices-link-section">
-                                        <a id="pageLink-ShowAllAvailableServicesLink" href="/en-IE/WhatCanIUseItFor" class="a-linkText a-linkText--centered a-linkText--displayBlock a-linkText--fontStyle-infoPage show-all-available-services-link" data-googletaglabel="What can I use MyGovID for?">Learn More About These Services</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    
-                }
-                else
-                {
-                    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
-                        <div>
-                            <p>
-                                @foreach (var provider in Model.ExternalLogins!)
-                                {
-                                    <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
-                                }
-                            </p>
-                        </div>
-                    </form>
-                }
-            }
-        </section>
-    
-
-
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
-
