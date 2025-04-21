@@ -2,7 +2,6 @@
 
 using Microsoft.EntityFrameworkCore;
 using MOProject.Areas.Identity.Data;
-using RPProject.Models;
 
 
 

@@ -20,18 +20,18 @@ builder.Host.UseSerilog();
 builder.Logging.ClearProviders();
 builder.Logging.AddSerilog();
 
-// Register DbContext
+// Register ApplicationDbContext with RPProjectUser
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Register Identity services
+// Register Identity services with RPProjectUser and ApplicationDbContext
 builder.Services.AddDefaultIdentity<RPProjectUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<ApplicationDbContext>();
+    .AddEntityFrameworkStores<ApplicationDbContext>(); // Link with ApplicationDbContext
 
 // Register additional services
 builder.Services.AddScoped<IDbInitializer, DbInitializer>(); // Replace with your actual implementation
-builder.Services.AddScoped<UserManager<RPProjectUser>>();
-builder.Services.AddScoped<SignInManager<RPProjectUser>>();
+builder.Services.AddScoped<UserManager<RPProjectUser>>(); // Correct UserManager registration
+builder.Services.AddScoped<SignInManager<RPProjectUser>>(); // Correct SignInManager registration
 builder.Services.AddTransient<IEmailService, DevTimeEmailService>();
 
 builder.Services.AddRazorPages();
@@ -70,7 +70,7 @@ app.MapControllerRoute(
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}"); // Correct default action
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
 

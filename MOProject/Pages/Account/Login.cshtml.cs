@@ -75,9 +75,11 @@ namespace MOProject.Pages.Account
         }
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
-            returnUrl ??= Url.Content("~/Dash/dash");  // Ensure the correct path
+            // Set default redirect to blog page if no returnUrl is specified
+            returnUrl ??= Url.Content("~/Blog");
 
-            _logger.LogInformation($"Attempting to redirect to: {returnUrl}");  // Log the redirection URL
+
+            _logger.LogInformation($"Attempting to redirect to: {returnUrl}");
 
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
@@ -87,7 +89,7 @@ namespace MOProject.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
-                    return LocalRedirect(returnUrl);  // Redirect to the specified returnUrl or Dashboard
+                    return LocalRedirect(returnUrl);  // Go to blog page
                 }
                 if (result.RequiresTwoFactor)
                 {
@@ -108,6 +110,7 @@ namespace MOProject.Pages.Account
             // If we got this far, something failed, redisplay form
             return Page();
         }
+
 
 
     }
