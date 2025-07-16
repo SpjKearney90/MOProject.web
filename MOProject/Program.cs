@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using MOProject.Areas.Identity.Data;
-using MOProject.Data;
+
+// using MOProject.Data;
 using MOProject.Models;
-using MOProject.Services;
-using MOProject.Utilities;
+// using MOProject.Services;
+// using MOProject.Utilities;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,29 +20,25 @@ builder.Host.UseSerilog();
 builder.Logging.ClearProviders();
 builder.Logging.AddSerilog();
 
-// Register ApplicationDbContext with RPProjectUser
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+// === Database and Identity setup (DISABLED) ===
 
-// Register Identity services with RPProjectUser and ApplicationDbContext
-builder.Services.AddDefaultIdentity<RPProjectUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<ApplicationDbContext>(); // Link with ApplicationDbContext
+// builder.Services.AddDbContext<ApplicationDbContext>(options =>
+//     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Register additional services
-builder.Services.AddScoped<IDbInitializer, DbInitializer>(); // Replace with your actual implementation
-builder.Services.AddScoped<UserManager<RPProjectUser>>(); // Correct UserManager registration
-builder.Services.AddScoped<SignInManager<RPProjectUser>>(); // Correct SignInManager registration
-builder.Services.AddTransient<IEmailService, DevTimeEmailService>();
+// builder.Services.AddDefaultIdentity<RPProjectUser>(options => options.SignIn.RequireConfirmedAccount = true)
+//     .AddEntityFrameworkStores<ApplicationDbContext>();
+
+// === Application services (non-database dependent) ===
 
 builder.Services.AddRazorPages();
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
-// Seed initial data
-SeedData(app);
+// === OPTIONAL: Comment out or rewrite this if it depends on the DB ===
+// SeedData(app);
 
-// Configure middleware
+// Middleware configuration
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
@@ -58,15 +54,15 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseAuthentication();
-app.UseAuthorization();
+// These are safe to keep if you're not using Identity
+// But you can comment them out if you're also disabling auth:
+// app.UseAuthentication();
+// app.UseAuthorization();
 
-// Define routing
+// Routing
 app.MapRazorPages();
 
-app.MapControllerRoute(
-    name: "area",
-    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
 
 app.MapControllerRoute(
     name: "default",
@@ -74,23 +70,5 @@ app.MapControllerRoute(
 
 app.Run();
 
-// Data seeding method
-void SeedData(WebApplication app)
-{
-    using (var scope = app.Services.CreateScope())
-    {
-        var dbInitializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
-        var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
-
-        try
-        {
-            dbInitializer.Initialize();
-            logger.LogInformation("Data seeding completed successfully.");
-        }
-        catch (Exception ex)
-        {
-            logger.LogError(ex, "Error during data seeding.");
-            throw;
-        }
-    }
-}
+// === Optional: Remove or refactor if this seeds database ===
+// void SeedData(WebApplication app) { ... }

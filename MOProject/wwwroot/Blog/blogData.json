@@ -1,0 +1,42 @@
+[
+  {
+    "Title": "First Post",
+    "Subtitle": "Welcome to the blog",
+    "Author": "Alice",
+    "Date": "2025-07-15T00:00:00",
+    "Slug": "first-post",
+    "Content": "<p>In the heart of the bustling city, where skyscrapers kissed the sky and streets hummed with the rhythm of daily life, there lay a small, unassuming café. It was a refuge from the chaos outside, a place where time seemed to slow down just enough for people to catch their breath.</p><p>The café was owned by a man named Thomas, who had a passion for storytelling. He often hosted small reading nights where locals would gather to share their favorite passages, personal anecdotes, or even original works.</p><p>Outside, the city continued to move fast, but inside the café, time was elastic and gentle. The café was more than just a place to drink coffee—it was a sanctuary for creativity, empathy, and shared moments that lingered long after the last sip.</p>"
+  },
+  {
+    "Title": "Exploring the Mountains",
+    "Subtitle": "A journey into the unknown",
+    "Author": "Liam",
+    "Date": "2025-07-14T00:00:00",
+    "Slug": "exploring-the-mountains",
+    "Content": "<p>There’s something magical about standing on a mountain ridge, watching the sun rise over the peaks. The air is thin, the silence profound, and the vastness humbling. It’s in these moments that you remember how small you are and how much there is to discover.</p><p>During my recent trip to the Rockies, I camped under the stars, hiked through valleys, and met people whose lives were shaped by the land itself. Each path led to new discoveries, and each night brought a different kind of peace.</p><p>Mountains teach you patience, persistence, and the beauty of solitude. And every time I leave, I promise myself I’ll return.</p>"
+  },
+  {
+    "Title": "The Art of Slow Living",
+    "Subtitle": "Finding joy in stillness",
+    "Author": "Maya",
+    "Date": "2025-07-13T00:00:00",
+    "Slug": "the-art-of-slow-living",
+    "Content": "<p>In a world obsessed with speed, slowing down has become a quiet act of rebellion. Slow living is about savoring moments, choosing presence over productivity, and valuing depth over distraction.</p><p>I started practicing slow mornings—no phone, no rush. Just coffee, journaling, and silence. It changed everything. I noticed more, stressed less, and felt grounded.</p><p>Life isn’t a race to the finish. It’s a collection of fleeting, precious moments. Embrace them slowly.</p>"
+  },
+  {
+    "Title": "Lessons from the Garden",
+    "Subtitle": "Nature’s quiet wisdom",
+    "Author": "Elena",
+    "Date": "2025-07-12T00:00:00",
+    "Slug": "lessons-from-the-garden",
+    "Content": "<p>I never thought pulling weeds could be meditative, but here we are. Gardening has taught me more about life than any classroom ever could. Things grow slowly, setbacks happen, and beauty often hides beneath the soil.</p><p>There’s a rhythm in the garden that asks nothing of you but patience and care. You learn to trust time. You begin to see progress not in leaps, but in sprouts.</p><p>And most of all, you learn to let go. Some things flourish, some fade. Both are part of the process.</p>"
+  },
+  {
+    "Title": "City Lights, Quiet Nights",
+    "Subtitle": "Reflections from an urban dweller",
+    "Author": "Noah",
+    "Date": "2025-07-11T00:00:00",
+    "Slug": "city-lights-quiet-nights",
+    "Content": "<p>The city never really sleeps, but somehow, there are pockets of calm hidden in plain sight. I find mine on the rooftop of my apartment, where the buzz fades and the skyline glows.</p><p>I watch people move below like streams of light. Each person a story. Each moment fleeting. The hum of traffic becomes a lullaby. The neon signs a constellation.</p><p>There’s a strange poetry to urban life. It’s chaotic, messy, and full of stories waiting to be told. And for now, it’s home.</p>"
+  }
+]

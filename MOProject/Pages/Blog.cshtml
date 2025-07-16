@@ -1,29 +1,31 @@
 ﻿@page
 @model MOProject.Pages.BlogModel
-@using X.PagedList.Mvc.Core
 @{
-    string thumbnailUrl = string.IsNullOrWhiteSpace(Model.HomeVM?.ThumbnailUrl)
-        ? "~/Admin/ThumbNail/Thumbnail"
-        : "/thumbnails/" + Model.HomeVM.ThumbnailUrl;
+    // Commented out because properties not found in ViewModel
+    // string thumbnailUrl = string.IsNullOrWhiteSpace(Model.ViewModel?.ThumbnailUrl)
+    //     ? "~/Admin/ThumbNail/Thumbnail"
+    //     : "/thumbnails/" + Model.ViewModel.ThumbnailUrl;
 }
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@Model.HomeVM?.Title</title>
-    <link rel="stylesheet" href="./Blogstyles.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Blog</title>  <!-- fallback title -->
+    <link rel="stylesheet" href="./Blogstyles.css" />
 </head>
 <body>
     <!-- Page Header -->
-    <header class="masthead" style="background-image: url('@thumbnailUrl');">
+    <header class="masthead" 
+       style="background-image: url('@Url.Content("~/BlogHeader.jpg")')"
+
         <div class="position-relative px-lg-5 container px-4">
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-md-10 col-lg-8 col-xl-7">
                     <div class="site-heading">
-                        <h1>@Model.HomeVM?.Title</h1>
-                        <span class="subheading">@Model.HomeVM?.ShortDescription</span>
+                        <h1>Blog</h1>
+                        <span class="subheading">Welcome to our blog posts</span>
                     </div>
                 </div>
             </div>
@@ -34,23 +36,19 @@
     <div class="px-lg-5 container px-4">
         <div class="row gx-4 gx-lg-5 justify-content-center">
             <div class="col-md-10 col-lg-8 col-xl-7">
-                @if (Model.HomeVM?.Posts != null && Model.HomeVM.Posts.Any())
+                @if (Model.ViewModel?.Posts != null && Model.ViewModel.Posts.Any())
                 {
-                    @foreach (var post in Model.HomeVM.Posts)
+                    @foreach (var post in Model.ViewModel.Posts)
                     {
-                        <!-- Post Preview -->
                         <div class="post-preview">
-                            <a href="@Url.Action("Post", "Blog", new { slug = post.Slug })">
+                            <a asp-page="/Post" asp-route-slug="@post.Slug">
                                 <h2 class="post-title">@post.Title</h2>
-                                <h3 class="post-subtitle">@post.ShortDescription</h3>
+                                <h3 class="post-subtitle">@post.Subtitle</h3>
                             </a>
                             <p class="post-meta">
-                                Posted by
-                                <a href="#!">@post.ApplicationUser?.FirstName @post.ApplicationUser?.LastName</a>
-                                on @post.CreatedDate.ToShortDateString()
+                                Posted by @post.Author on @post.Date.ToShortDateString()
                             </p>
                         </div>
-                        <!-- Divider -->
                         <hr class="my-4" />
                     }
                 }
@@ -58,19 +56,6 @@
                 {
                     <p>No posts available.</p>
                 }
-
-                <!-- Pagination -->
-                <div class="pagination">
-                    @if (Model.HomeVM?.Posts?.HasPreviousPage == true)
-                    {
-                        <a href="@Url.Action("Blog", new { page = Model.HomeVM.Posts.PageNumber - 1 })" class="btn btn-primary mx-1">Previous</a>
-                    }
-                    @if (Model.HomeVM?.Posts?.HasNextPage == true)
-                    {
-                        <a href="@Url.Action("Blog", new { page = Model.HomeVM.Posts.PageNumber + 1 })" class="btn btn-primary mx-1">Next</a>
-                    }
-                </div>
-
             </div>
         </div>
     </div>

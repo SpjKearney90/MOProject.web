@@ -1,60 +1,29 @@
-using MOProject.Data;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Text.Json;
+using System.IO;
 using MOProject.Models;
 using MOProject.ViewModels;
-using X.PagedList;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 namespace MOProject.Pages
 {
     public class BlogModel : PageModel
     {
-        private readonly ApplicationDbContext _context;
+        public BlogPageViewModel ViewModel { get; set; } = new();
 
-        public BlogModel(ApplicationDbContext context)
+        public void OnGet()
         {
-            _context = context;
-        }
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Blog", "blogData.json");
 
-        // This is the ViewModel you will use in your Razor Page
-        public HomeVM HomeVM { get; set; }
-
-        // OnGet method will handle the logic to fetch data for the page
-        public async Task OnGetAsync(int? page)
-        {
-            HomeVM = new HomeVM();
-
-            // Fetch the setting data for the page (Title, ShortDescription, etc.)
-            var setting = await _context.Settings!.FirstOrDefaultAsync();
-            if (setting != null)
+            if (System.IO.File.Exists(filePath))
             {
-                HomeVM.Title = setting.Title;
-                HomeVM.ShortDescription = setting.ShortDescription;
-                HomeVM.ThumbnailUrl = setting.ThumbnailUrl;
+                var json = System.IO.File.ReadAllText(filePath);
+                ViewModel.Posts = JsonSerializer.Deserialize<List<BlogPost>>(json);
             }
-
-            // Pagination setup
-            int pageSize = 5;  // Number of posts per page
-            int pageNumber = page ?? 1;  // Default to page 1 if not provided
-
-            // Query posts and apply pagination
-            var postsQuery = _context.Posts!
-                .Include(x => x.ApplicationUser)
-                .OrderByDescending(x => x.CreatedDate);
-
-            // Fetch posts for the current page
-            var posts = await postsQuery
-                .Skip((pageNumber - 1) * pageSize)
-                .Take(pageSize)
-                .ToListAsync();
-
-            // Get the total count for pagination
-            var totalCount = await postsQuery.CountAsync();
-            HomeVM.Posts = new StaticPagedList<Post>(posts, pageNumber, pageSize, totalCount);
-
-            // Calculate total pages and add to HomeVM
-            HomeVM.TotalPages = (int)Math.Ceiling((double)totalCount / pageSize);
-            HomeVM.CurrentPage = pageNumber;
+            else
+            {
+                ViewModel.Posts = new List<BlogPost>();
+            }
         }
     }
 }
