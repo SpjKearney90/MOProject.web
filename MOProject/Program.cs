@@ -1,9 +1,10 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using MOProject.Data;
+
+// using MOProject.Data;
 using MOProject.Models;
-using MOProject.Services;
-using MOProject.Utilities;
+// using MOProject.Services;
+// using MOProject.Utilities;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,28 +16,29 @@ Log.Logger = new LoggerConfiguration()
     .WriteTo.File("logs/myapp-.log", rollingInterval: RollingInterval.Day)
     .CreateLogger();
 
-// Use Serilog as the logging provider
 builder.Host.UseSerilog();
 builder.Logging.ClearProviders();
 builder.Logging.AddSerilog();
 
-// Add services to the container
+// === Database and Identity setup (DISABLED) ===
+
+// builder.Services.AddDbContext<ApplicationDbContext>(options =>
+//     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// builder.Services.AddDefaultIdentity<RPProjectUser>(options => options.SignIn.RequireConfirmedAccount = true)
+//     .AddEntityFrameworkStores<ApplicationDbContext>();
+
+// === Application services (non-database dependent) ===
+
 builder.Services.AddRazorPages();
 builder.Services.AddControllersWithViews();
-builder.Services.AddTransient<IEmailService, DevTimeEmailService>();
-
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
-builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
-    .AddEntityFrameworkStores<ApplicationDbContext>()
-    .AddDefaultTokenProviders();
-builder.Services.AddScoped<IDbInitializer, DbInitializer>();
 
 var app = builder.Build();
 
-// Data seeding
-DataSeeding(app);
+// === OPTIONAL: Comment out or rewrite this if it depends on the DB ===
+// SeedData(app);
 
+// Middleware configuration
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
@@ -47,44 +49,26 @@ else
     app.UseHsts();
 }
 
-// Middlewares
-app.UseDeveloperExceptionPage();
-
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseAuthentication();
-app.UseAuthorization();
+// These are safe to keep if you're not using Identity
+// But you can comment them out if you're also disabling auth:
+// app.UseAuthentication();
+// app.UseAuthorization();
 
-// Define routes
+// Routing
 app.MapRazorPages();
-app.MapControllerRoute(
-    name: "area",
-    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
+
+
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Home}/{id?}"); // Default to "Home" action
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
 
-void DataSeeding(WebApplication app)
-{
-    using (var scope = app.Services.CreateScope())
-    {
-        var dbInitializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
-        var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
-
-        try
-        {
-            dbInitializer.Initialize();
-            logger.LogInformation("Data seeding completed successfully.");
-        }
-        catch (Exception ex)
-        {
-            logger.LogError(ex, "Error during data seeding.");
-            throw;
-        }
-    }
-}
+// === Optional: Remove or refactor if this seeds database ===
+// void SeedData(WebApplication app) { ... }
