@@ -1,6 +1,4 @@
-﻿namespace MOProject.Services;
-
-public interface IEmailService
+﻿public interface IEmailService
 {
-  void SendMail(string to, string from, string subject, string body);
+    Task SendEmailAsync(string name, string email, string phone, string message);
 }

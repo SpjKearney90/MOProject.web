@@ -64,10 +64,7 @@
                     Your browser does not support the video tag.
                 </video>
                 <div class="bg-white/50 -translate-y-1/2 absolute left-0 right-0 top-1/2 mx-auto flex max-w-lg transform flex-col items-center justify-center gap-2 p-4 backdrop-blur-xl">
-                    <h2 class="font-header text-xl font-bold text-white">First Section</h2>
-                    <p class="font-header text-center text-base text-white">
-                        Welcome to my Website. Please feel free to view my gallery of some of my latest work. I also have a blog which I update on a regaulr basis with some of my thoughts and wo
-                    </p>
+                   <p class="font-primary text-center text-1xl font-extralight"> Welcome to my website , please feel free to explore my blogs and view my gallery. Feel free to use the contact page to get in touch if you have any questions.</p>
                     <a href="#" id="exploreButton" class="border-2 mt-2 inline-block border-pink-500 bg-pink-200 px-4 py-1 text-xs uppercase tracking-wider text-gray-800 transition duration-200 ease-in-out hover:tracking-widest">
                         Explore
                     </a>
@@ -75,25 +72,99 @@
             </div>
         </div>
 
-        <!-- Second Section -->
-        <div class="z-10 flex-1 relative flex flex-col items-center justify-center bg-white p-4 text-center md:p-24">
-            <div class="w-full max-w-2xl">
-                <h2 class="font-header text-xl font-bold">Gallery</h2>
-                <div class="mt-4 flex flex-wrap justify-center space-x-2 space-y-2">
-                    <img alt="Gallery Image 1" class="image h-52 w-52 cursor-pointer rounded-lg object-cover md:h-48 md:w-48" src="./Show1.jpg" onclick="openModal(this.src)" />
-                    <img alt="Gallery Image 2" class="image h-52 w-52 cursor-pointer rounded-lg object-cover md:h-48 md:w-48" src="./Show2.jpg" onclick="openModal(this.src)" />
-                    <img alt="Gallery Image 3" class="image h-52 w-52 cursor-pointer rounded-lg object-cover md:h-48 md:w-48" src="./Show3.jpg" onclick="openModal(this.src)" />
-                    <img alt="Gallery Image 4" class="image h-52 w-52 cursor-pointer rounded-lg object-cover md:h-48 md:w-48" src="./Show4.jpg" onclick="openModal(this.src)" />
-                    <img alt="Gallery Image 5" class="image h-52 w-52 cursor-pointer rounded-lg object-cover md:h-48 md:w-48" src="./Show3.jpg" onclick="openModal(this.src)" />
-                    <img alt="Gallery Image 6" class="image h-52 w-52 cursor-pointer rounded-lg object-cover md:h-48 md:w-48" src="./Show2.jpg" onclick="openModal(this.src)" />
-                </div>
-            </div>
-        </div>
+     <!-- Tailwind CSS (CDN if needed) -->
+<script src="https://cdn.tailwindcss.com"></script>
+
+<!-- Tailwind CSS via CDN -->
+<script src="https://cdn.tailwindcss.com"></script>
+
+<!-- Gallery Carousel -->
+<div class="flex flex-col items-center py-8 bg-white">
+  
+  <h2 class="font-primary text-center text-2xl font-extralight">Please view my Gallery</h2
+
+  <div class="relative flex items-center">
+    <!-- Left Arrow -->
+    <button onclick="prevSlide()" class="mr-4 text-3xl bg-white-200 hover:bg-white-300 rounded-full p-2">
+      &#8592;
+    </button>
+
+    <!-- Carousel Viewport -->
+  <div class="w-64 h-64 overflow-hidden rounded-lg">
+  <div id="carouselTrack" class="flex transition-transform duration-300">
+    <img src="./Show1.jpg" class="w-64 h-64 object-cover cursor-pointer flex-shrink-0" onclick="openModal(this.src)" alt="Gallery Image 1">
+    <img src="./Show2.jpg" class="w-64 h-64 object-cover cursor-pointer flex-shrink-0" onclick="openModal(this.src)" alt="Gallery Image 2">
+    <img src="./Show3.jpg" class="w-64 h-64 object-cover cursor-pointer flex-shrink-0" onclick="openModal(this.src)" alt="Gallery Image 3">
+    <img src="./Show4.jpg" class="w-64 h-64 object-cover cursor-pointer flex-shrink-0" onclick="openModal(this.src)" alt="Gallery Image 4">
+    <img src="./Show3.jpg" class="w-64 h-64 object-cover cursor-pointer flex-shrink-0" onclick="openModal(this.src)" alt="Gallery Image 5">
+    <img src="./Show2.jpg" class="w-64 h-64 object-cover cursor-pointer flex-shrink-0" onclick="openModal(this.src)" alt="Gallery Image 6">
+  </div>
+</div>
+
+
+    <!-- Right Arrow -->
+    <button onclick="nextSlide()" class="ml-4 text-3xl bg-white-200 hover:bg-white-300 rounded-full p-2">
+      &#8594;
+    </button>
+  </div>
+</div>
+
+<!-- Modal -->
+<div id="modal" class="fixed inset-0 bg-black bg-opacity-80 hidden items-center justify-center z-50">
+  <div class="relative">
+    <img id="modalImage" src="" class="max-h-[90vh] max-w-[90vw] rounded-lg" alt="Full Image" />
+    <button onclick="closeModal()" class="absolute top-2 right-2 text-white text-3xl font-bold">&times;</button>
+  </div>
+</div>
+
+<!-- JavaScript -->
+<script>
+  const track = document.getElementById('carouselTrack');
+  const slides = track.children;
+  const slideWidth = slides[0].offsetWidth;
+  let currentIndex = 0;
+
+  function updateCarousel() {
+    track.style.transform = `translateX(-${slideWidth * currentIndex}px)`;
+  }
+
+  function nextSlide() {
+    if (currentIndex < slides.length - 1) {
+      currentIndex++;
+      updateCarousel();
+    }
+  }
+
+  function prevSlide() {
+    if (currentIndex > 0) {
+      currentIndex--;
+      updateCarousel();
+    }
+  }
+
+  function openModal(src) {
+    document.getElementById('modalImage').src = src;
+    const modal = document.getElementById('modal');
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+  }
+
+  function closeModal() {
+    document.getElementById('modal').classList.add('hidden');
+  }
+
+  document.getElementById('modal').addEventListener('click', function (e) {
+    if (e.target.id === 'modal') closeModal();
+  });
+</script>
+
+
+
 
         <!-- Third Section -->
         <div class="z-10 flex-1 relative flex flex-col items-center justify-center bg-black p-6 text-center">
             <div class="w-full max-w-2xl">
-                <h2 class="font-casual text-2xl font-bold text-white">About Me</h2>
+                <h3 class="font-primary text-center text-2xl font-extralight"> A little about me </h3>
                 <div class="mt-4 flex flex-col items-center gap-4 md:flex-row md:gap-8">
                     <img src="~/TestProfile.jpg" alt="Profile Picture" class="border-4 h-32 w-32 rounded-full border-white object-cover md:h-40 md:w-40">
                     <p class="max-w-lg text-left text-white">
