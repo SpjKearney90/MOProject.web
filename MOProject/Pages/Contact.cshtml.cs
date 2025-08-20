@@ -1,9 +1,9 @@
-using MOProject.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using MOProject.ViewModels;
 
-namespace MOProject.Pages;
-
+namespace MOProject.Pages
+{
     public class ContactModel : PageModel
     {
         private readonly IEmailService _emailService;
@@ -13,32 +13,27 @@ namespace MOProject.Pages;
             _emailService = emailService;
         }
 
-        public string Title { get; set; } = "Contact Me";
-        public string Message { get; set; } = "";
-
         [BindProperty]
-        public ContactViewModel Contact { get; set; } = new ContactViewModel()
-        {
-            Name = "Shawn Wildermuth"
-        };
+        public ContactFormModel ContactForm { get; set; }
 
-        public void OnGet()
-        {
-        }
+        public string SuccessMessage { get; set; }
 
-        public void OnPost()
+        public async Task<IActionResult> OnPostAsync()
         {
-            if (ModelState.IsValid)
-            {
-                _emailService.SendMail("bob@aol.com", Contact.Email, Contact.Subject, Contact.Body);
-                Contact = new ContactViewModel();
-                ModelState.Clear();
-                Message = "Sent...";
-            }
-            else
-            {
-                Message = "Please fix the errors before sending.";
-            }
+            if (!ModelState.IsValid)
+                return Page();
+
+            await _emailService.SendEmailAsync(
+                ContactForm.Name,
+                ContactForm.Email,
+                ContactForm.Phone,
+                ContactForm.Message
+            );
+
+            SuccessMessage = "Your message was sent successfully!";
+            ModelState.Clear();
+            return RedirectToPage("/Index"); // Razor Page in Pages/Index.cshtml
+
         }
     }
-    
+}

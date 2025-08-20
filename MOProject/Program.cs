@@ -19,6 +19,8 @@ Log.Logger = new LoggerConfiguration()
 builder.Host.UseSerilog();
 builder.Logging.ClearProviders();
 builder.Logging.AddSerilog();
+builder.Services.AddTransient<IEmailService, EmailService>();
+
 
 // === Database and Identity setup (DISABLED) ===
 
