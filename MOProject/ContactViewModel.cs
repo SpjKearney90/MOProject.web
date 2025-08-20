@@ -19,4 +19,4 @@ namespace MOProject
         [MinLength(25)]
         public string Body { get; set; } = "";
     }
-}
+}       

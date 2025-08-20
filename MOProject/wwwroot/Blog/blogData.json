@@ -1,12 +1,15 @@
 [
-  {
-    "Title": "First Post",
-    "Subtitle": "Welcome to the blog",
-    "Author": "Alice",
-    "Date": "2025-07-15T00:00:00",
-    "Slug": "first-post",
-    "Content": "<p>In the heart of the bustling city, where skyscrapers kissed the sky and streets hummed with the rhythm of daily life, there lay a small, unassuming café. It was a refuge from the chaos outside, a place where time seemed to slow down just enough for people to catch their breath.</p><p>The café was owned by a man named Thomas, who had a passion for storytelling. He often hosted small reading nights where locals would gather to share their favorite passages, personal anecdotes, or even original works.</p><p>Outside, the city continued to move fast, but inside the café, time was elastic and gentle. The café was more than just a place to drink coffee—it was a sanctuary for creativity, empathy, and shared moments that lingered long after the last sip.</p>"
-  },
+ {
+  "Title": "First Post",
+  "Subtitle": "Welcome to the blog",
+  "Author": "Alice",
+  "Date": "2025-07-15T00:00:00",
+  "Slug": "first-post",
+  "Content": "<p>In the heart of the bustling city, where skyscrapers kissed the sky and streets hummed with the rhythm of daily life, there lay a small, unassuming café. It was a refuge from the chaos outside, a place where time seemed to slow down just enough for people to catch their breath.</p><img src=\"/Show2.jpg\" alt=\"Inside the cozy café\" style=\"max-width:100%; height:auto; margin: 20px 0;\" /><p>The café was owned by a man named Thomas, who had a passion for storytelling. He often hosted small reading nights where locals would gather to share their favorite passages, personal anecdotes, or even original works.</p><p>Outside, the city continued to move fast, but inside the café, time was elastic and gentle. The café was more than just a place to drink coffee—it was a sanctuary for creativity, empathy, and shared moments that lingered long after the last sip.</p>"
+},
+
+
+
   {
     "Title": "Exploring the Mountains",
     "Subtitle": "A journey into the unknown",

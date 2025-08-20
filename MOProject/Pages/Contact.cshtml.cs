@@ -32,7 +32,8 @@ namespace MOProject.Pages
 
             SuccessMessage = "Your message was sent successfully!";
             ModelState.Clear();
-            return Page();
+            return RedirectToPage("/Index"); // Razor Page in Pages/Index.cshtml
+
         }
     }
 }

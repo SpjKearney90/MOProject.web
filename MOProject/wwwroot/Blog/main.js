@@ -2,23 +2,28 @@ fetch('Blog/blogData.json')
   .then(response => response.json())
   .then(posts => {
     const container = document.getElementById('blog-container');
+    const fragment = document.createDocumentFragment();
 
     posts.forEach(post => {
-      const postHTML = `
-        <div class="post-preview">
-          <a href="/blog/${post.slug}">
-            <h2 class="post-title">${post.title}</h2>
-            <h3 class="post-subtitle">${post.subtitle}</h3>
-          </a>
-          <p class="post-meta">
-            Posted by <a href="#">${post.author}</a> on ${new Date(post.date).toLocaleDateString()}
-          </p>
-        </div>
-        <hr class="my-4"/>
+      const div = document.createElement('div');
+      div.classList.add('post-preview', 'mb-8');
+
+      div.innerHTML = `
+        <a href="/blog/${post.slug}">
+          ${post.imageUrl ? `<img src="${post.imageUrl}" alt="${post.title}" class="w-full h-auto mb-4 rounded" />` : ''}
+          <h2 class="post-title text-2xl font-bold">${post.title}</h2>
+          <h3 class="post-subtitle text-lg text-gray-600">${post.subtitle}</h3>
+        </a>
+        <p class="post-meta text-sm text-gray-500 mt-2">
+          Posted by <a href="#">${post.author}</a> on ${new Date(post.date).toLocaleDateString()}
+        </p>
+        <hr class="my-6 border-gray-300"/>
       `;
 
-      container.insertAdjacentHTML('beforeend', postHTML);
+      fragment.appendChild(div);
     });
+
+    container.appendChild(fragment);
   })
   .catch(error => {
     console.error('Error loading blog data:', error);

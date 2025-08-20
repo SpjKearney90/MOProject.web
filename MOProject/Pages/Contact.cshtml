@@ -12,6 +12,18 @@
         {
             <div class="alert alert-success">@Model.SuccessMessage</div>
         }
+           @if (!string.IsNullOrEmpty(Model.SuccessMessage))
+            {
+                <div class="alert alert-success text-center" id="success-message">
+                    @Model.SuccessMessage
+                </div>
+
+                <script>
+                    setTimeout(function () {
+                        window.location.href = '/'; // Adjust this if your homepage is at a different route
+                    }, 3000);
+                </script>
+            }
 
         <form method="post">
             <div class="mb-3">
