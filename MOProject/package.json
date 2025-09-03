@@ -1,23 +1,13 @@
 {
   "name": "moproject",
   "version": "1.0.0",
-  "main": "index.js",
   "scripts": {
     "css": "npx tailwindcss -i ./wwwroot/site.src.css -o ./wwwroot/site.css -w"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
   "devDependencies": {
     "tailwindcss": "^3.4.17",
     "webpack": "^5.96.1",
     "webpack-cli": "^5.1.4"
-  },
-  "-vs-binding": {
-    "ProjectOpened": [
-      "css"
-    ]
   },
   "dependencies": {
     "bootstrap": "^5.3.3",
@@ -33,5 +23,6 @@
     "react-dom": "^18.3.1",
     "react-multi-carousel": "^2.8.5",
     "sass": "^1.79.3"
-  }
+  },
+  "license": "ISC"
 }
